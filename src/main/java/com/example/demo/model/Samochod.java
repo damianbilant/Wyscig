@@ -22,4 +22,10 @@ public class Samochod {
     public Integer getSzybkosc() {
         return szybkosc;
     }
+
+
+    @Override
+    public String toString() {
+    return "ciężar samochodu to: " + getCiezar() + "skuteczność hamowania samochodu to: " + getHamowanie() + "szybkość samochodu to: " + getSzybkosc();
+    }
 }

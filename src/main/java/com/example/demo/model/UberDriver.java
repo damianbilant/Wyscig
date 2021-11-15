@@ -1,8 +1,12 @@
 package com.example.demo.model;
 
-public class UberDriver extends Kierowca {
+import com.example.demo.serwis.KierowcaSerwis;
 
-    public UberDriver(Integer znajomoscTrasy, Integer stanTrzezwosci, Integer szybkoscReakcji) {
-        super(znajomoscTrasy, stanTrzezwosci, szybkoscReakcji);
+public class UberDriver extends Kierowca    {
+
+    public UberDriver() {
+        super(TypKierowcy.UBER, KierowcaSerwis.losuj(0,10), KierowcaSerwis.losuj(2,10), KierowcaSerwis.losuj(7,10));
     }
+
+
 }
