@@ -1,9 +1,12 @@
 package com.example.demo;
 
+import com.example.demo.model.Pogoda;
+import com.example.demo.model.TrasaLevel;
 import com.example.demo.model.TypKierowcy;
 import com.example.demo.model.TypSamochodu;
 import com.example.demo.serwis.KierowcaSerwis;
 import com.example.demo.serwis.SamochodSerwis;
+import com.example.demo.serwis.TrasaSerwis;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -23,10 +26,11 @@ public class WyscigApplication {
 
 		SamochodSerwis samochodSerwis = new SamochodSerwis();
 		samochodSerwis.stworzSamochod(TypSamochodu.SUV);
-		samochodSerwis.stworzSamochod((TypSamochodu.COUPE));
-		samochodSerwis.stworzSamochod((TypSamochodu.HATCHBACK));
+		samochodSerwis.stworzSamochod(TypSamochodu.COUPE);
+		samochodSerwis.stworzSamochod(TypSamochodu.HATCHBACK);
 
-
+		TrasaSerwis trasaSerwis = new TrasaSerwis();
+		trasaSerwis.stworzTrase(TrasaLevel.EASY, trasaSerwis.wylosujPogode());
 	}
 
 }

@@ -13,10 +13,10 @@ public class KierowcaSerwis {
         Kierowca kierowca;
         switch (typKierowcy) {
             case UBER:
-                kierowca = new UberDriver();
+                kierowca = new KierowcaUber();
                 break;
             case STARYDZIAD:
-                kierowca = new OldDziadDriver();
+                kierowca = new KierowcaDziad();
                 break;
             default:
                 kierowca = null;

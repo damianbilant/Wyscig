@@ -1,25 +1,11 @@
 package com.example.demo.model;
 
-public class OdcinekProsty {
-    private Integer dlugoscOdcinka;
-    private Integer trudnoscOdcinka;
-    private String nazwaOdcinka;
+import com.example.demo.utils.Utils;
 
-    public OdcinekProsty(Integer dlugoscOdcinka, Integer trudnoscOdcinka, String nazwaOdcinka) {
-        this.dlugoscOdcinka = dlugoscOdcinka;
-        this.trudnoscOdcinka = trudnoscOdcinka;
-        this.nazwaOdcinka = nazwaOdcinka;
-    }
-
-    public Integer getDlugoscOdcinka() {
-        return dlugoscOdcinka;
-    }
-
-    public Integer getTrudnoscOdcinka() {
-        return trudnoscOdcinka;
-    }
-
-    public String getNazwaOdcinka() {
-        return nazwaOdcinka;
-    }
+public class OdcinekProsty extends Odcinek{
+public OdcinekProsty(){
+    super(TypOdcinka.PROSTY, Utils.losuj(2,10), 0, "Prosty" );
 }
+}
+
+

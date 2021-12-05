@@ -49,7 +49,7 @@ public abstract class Samochod {
         Integer y = (samochod.getCiezar() * zamianaJednostek(samochod));
         Integer drogaHamowania = y / samochod.getHamowanie();
         setDrogaHamowania(drogaHamowania);
-        System.out.println("Droga hamowania samochodu to: " + samochod.wyliczenieDrogiHamowania(samochod));
+        System.out.println("Droga hamowania samochodu to: " + drogaHamowania);
         return drogaHamowania;
     }
 
