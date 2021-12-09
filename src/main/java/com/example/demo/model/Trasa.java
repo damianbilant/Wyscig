@@ -6,6 +6,9 @@ public class Trasa {
     private Pogoda pogoda;
     private List<Odcinek> listaOdcinkow;
 
+    public Trasa(List<Odcinek> listaOdcinkow) {
+    }
+
     public Pogoda getPogoda() {
         return pogoda;
     }

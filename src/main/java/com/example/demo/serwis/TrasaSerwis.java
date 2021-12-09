@@ -35,22 +35,20 @@ public class TrasaSerwis {
         return odcinek;
     }
 
-    public Pogoda wylosujPogode() {
-        int rodzajPogody = Utils.losuj(0, 100);
-        Pogoda pogoda;
-        if (rodzajPogody < 25) {
-            pogoda = Pogoda.SUNNY;
-        } else if (rodzajPogody < 50) {
-            pogoda = Pogoda.CLOUDY;
-        } else if (rodzajPogody < 75) {
-            pogoda = Pogoda.RAINY;
+    public TrasaLevel wylosujPoziomTrudnosci() {
+        int skalaTrudnosci = Utils.losuj(0, 99);
+        TrasaLevel trasaLevel;
+        if (skalaTrudnosci < 33) {
+            trasaLevel = TrasaLevel.EASY;
+        } else if (skalaTrudnosci < 66) {
+            trasaLevel = TrasaLevel.MEDIUM;
         } else {
-            pogoda = Pogoda.SNOWY;
+            trasaLevel = TrasaLevel.HARD;
         }
-        return pogoda;
+        return trasaLevel;
     }
 
-    public Trasa stworzTrase(TrasaLevel poziomTrudnosci, Pogoda pogoda) {
+    public Trasa stworzTrase(TrasaLevel poziomTrudnosci) {
         Integer iloscOdcinkowProstych = poziomTrudnosci.getIloscOdcinkowProstych();
         Integer iloscPodjazdow = poziomTrudnosci.getIloscPodjazdow();
         Integer iloscZakretow = poziomTrudnosci.getIloscZakretow();
@@ -84,15 +82,55 @@ public class TrasaSerwis {
             }
         }
 
+        powtarzalnoscOdcinkow(listaOdcinkow);
+sumowanieDlugosciPowtarzalnychPoziomowOdcinkow(listaOdcinkow);
 
-        Collections.shuffle(listaOdcinkow);
+        Trasa trasa = new Trasa(listaOdcinkow);
 
-        Trasa trasa = new Trasa(pogoda, listaOdcinkow);
-
+        System.out.println("Poziom trudności trasy: " + poziomTrudnosci.getNazwaPoziomuTrasy() + ", długość trasy: " + sumowanieTrasy(listaOdcinkow) + " km");
+        System.out.println("Trasa składa się z odcinków:");
+        System.out.println();
         for (Odcinek odcinek : listaOdcinkow) {
-            System.out.println(odcinek.getNazwaOdcinka() + " " + odcinek.getDlugoscOdcinka() + " " + odcinek.getTrudnoscOdcinka());
+            System.out.println(odcinek.getNazwaOdcinka() + ", długość " + odcinek.getDlugoscOdcinka() + " km, " + "poziom trudności " + odcinek.getTrudnoscOdcinka());
         }
-        System.out.println("Pogoda " + pogoda.getNazwaPogody());
         return trasa;
     }
+    private void powtarzalnoscOdcinkow(List<Odcinek>listaOdcinkow) {
+        Integer licznikOdcinkow = 1;
+        for (int i = 1; i < listaOdcinkow.size(); i++) {
+            if (listaOdcinkow.get(i).getTypOdcinka().equals(listaOdcinkow.get(i-1).getTypOdcinka())) {
+                licznikOdcinkow += 1;
+                if (licznikOdcinkow == 4) {
+                    Collections.shuffle(listaOdcinkow);
+                    powtarzalnoscOdcinkow(listaOdcinkow);
+                }
+            } else {
+                licznikOdcinkow = 1;
+            }
+        }
+    }
+    private Integer sumowanieTrasy(List<Odcinek>listaOdcinkow) {
+        int suma = 0;
+        for(Odcinek odcinek : listaOdcinkow){
+            suma += odcinek.getDlugoscOdcinka();
+        }
+        return suma;
+    }
+    private void sumowanieDlugosciPowtarzalnychPoziomowOdcinkow(List<Odcinek>listaOdcinkow) {
+        for (int i = 1; i < listaOdcinkow.size(); i++) {
+        if (listaOdcinkow.get(i).getTypOdcinka().equals(listaOdcinkow.get(i-1).getTypOdcinka())) {
+            if(listaOdcinkow.get(i).getTrudnoscOdcinka().equals(listaOdcinkow.get(i-1).getTrudnoscOdcinka())){
+                int dlugoscOdcinka1 = listaOdcinkow.get(i).getDlugoscOdcinka();
+                int dlugoscOdcinka2 = listaOdcinkow.get(i-1).getDlugoscOdcinka();
+                int suma = dlugoscOdcinka2 + dlugoscOdcinka1;
+               /* System.out.println("zsumowało!!!!!!!!!!!!!!!!!!");
+                System.out.println(dlugoscOdcinka1 + " długość 1 " + dlugoscOdcinka2 + " długość 2 " + listaOdcinkow.get(i).getTrudnoscOdcinka() +
+                        " poziom1 " + listaOdcinkow.get(i-1).getTrudnoscOdcinka() + " poziom2");*/
+                listaOdcinkow.get(i-1).setDlugoscOdcinka(suma);
+                listaOdcinkow.remove(i);
+                sumowanieDlugosciPowtarzalnychPoziomowOdcinkow(listaOdcinkow);
+            }
+        }
+    }
+}
 }

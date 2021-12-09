@@ -1,10 +1,11 @@
 package com.example.demo.model;
 
 import com.example.demo.serwis.KierowcaSerwis;
+import com.example.demo.utils.Utils;
 
 public class KierowcaDziad extends Kierowca{
 
     public KierowcaDziad() {
-        super(TypKierowcy.STARYDZIAD, KierowcaSerwis.losuj(2,8), KierowcaSerwis.losuj(0,5),KierowcaSerwis.losuj(0,6));
+        super(TypKierowcy.STARYDZIAD, Utils.losuj(2,8), Utils.losuj(0,5),Utils.losuj(0,6));
     }
 }

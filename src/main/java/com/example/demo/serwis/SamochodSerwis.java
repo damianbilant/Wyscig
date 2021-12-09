@@ -3,8 +3,6 @@ package com.example.demo.serwis;
 import com.example.demo.model.*;
 import org.springframework.stereotype.Service;
 
-import java.util.Random;
-
 @Service
 
 public class SamochodSerwis {

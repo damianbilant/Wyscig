@@ -13,6 +13,10 @@ public abstract class Odcinek {
         this.nazwaOdcinka = nazwaOdcinka;
     }
 
+    public void setDlugoscOdcinka(Integer dlugoscOdcinka) {
+        this.dlugoscOdcinka = dlugoscOdcinka;
+    }
+
     public TypOdcinka getTypOdcinka() {
         return typOdcinka;
     }
