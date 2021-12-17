@@ -1,8 +1,6 @@
 package com.example.demo.serwis;
 
-import com.example.demo.model.Pogoda;
-import com.example.demo.model.TypKierowcy;
-import com.example.demo.model.TypSamochodu;
+import com.example.demo.model.*;
 
 public class WyscigSerwis {
 
@@ -17,14 +15,22 @@ public class WyscigSerwis {
 
         KierowcaSerwis kierowcaSerwis = new KierowcaSerwis();
         System.out.println();
-        kierowcaSerwis.stworzKierowce(TypKierowcy.UBER);
-        kierowcaSerwis.stworzKierowce(TypKierowcy.STARYDZIAD);
+        Kierowca uber = kierowcaSerwis.stworzKierowce(TypKierowcy.UBER);
+        uber.aktualizacjaReakcjiOdPogody(pogoda);
+        Kierowca starydziad = kierowcaSerwis.stworzKierowce(TypKierowcy.STARYDZIAD);
+        starydziad.aktualizacjaReakcjiOdPogody(pogoda);
         System.out.println();
 
+
         SamochodSerwis samochodSerwis = new SamochodSerwis();
-        samochodSerwis.stworzSamochod(TypSamochodu.SUV);
-        samochodSerwis.stworzSamochod(TypSamochodu.COUPE);
-        samochodSerwis.stworzSamochod(TypSamochodu.HATCHBACK);
+        Samochod suv = samochodSerwis.stworzSamochod(TypSamochodu.SUV);
+        suv.aktualizacjaSzybkosciIhamowania(pogoda);
+        System.out.println();
+        Samochod coupe = samochodSerwis.stworzSamochod(TypSamochodu.COUPE);
+        coupe.aktualizacjaSzybkosciIhamowania(pogoda);
+        System.out.println();
+        Samochod hatchback = samochodSerwis.stworzSamochod(TypSamochodu.HATCHBACK);
+        hatchback.aktualizacjaSzybkosciIhamowania(pogoda);
         System.out.println();
     }
 }

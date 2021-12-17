@@ -6,6 +6,6 @@ import com.example.demo.utils.Utils;
 public class KierowcaDziad extends Kierowca{
 
     public KierowcaDziad() {
-        super(TypKierowcy.STARYDZIAD, Utils.losuj(2,8), Utils.losuj(0,5),Utils.losuj(0,6));
+        super(TypKierowcy.STARYDZIAD, Utils.losuj(2,8), Utils.losuj(0,5),Utils.losuj(3,5));
     }
 }

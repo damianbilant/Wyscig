@@ -1,7 +1,5 @@
 package com.example.demo.model;
 
-import java.util.Random;
-
 public enum Pogoda {
     SUNNY(30, -50,2, "słoneczna"),
     CLOUDY(0,-30,1, "pochmurna"),
@@ -9,29 +7,29 @@ public enum Pogoda {
     SNOWY(-50,75,-2, "śnieżna");
 
 
-    private Integer zmianaSzybkosci;
-    private Integer zmianaHamowania;
-    private Integer zmianaSzybkosciReakcji;
+    private Integer zmianaSzybkosciSamochod;
+    private Integer zmianaHamowaniaSamochod;
+    private Integer zmianaSzybkosciReakcjiKierowcy;
     private String nazwaPogody;
 
 
-    Pogoda(Integer zmianaSzybkosci, Integer zmianaHamowania, Integer zmianaSzybkosciReakcji, String nazwaPogody) {
-        this.zmianaSzybkosci = zmianaSzybkosci;
-        this.zmianaHamowania = zmianaHamowania;
-        this.zmianaSzybkosciReakcji = zmianaSzybkosciReakcji;
+    Pogoda(Integer zmianaSzybkosciSamochod, Integer zmianaHamowaniaSamochod, Integer zmianaSzybkosciReakcjiKierowcy, String nazwaPogody) {
+        this.zmianaSzybkosciSamochod = zmianaSzybkosciSamochod;
+        this.zmianaHamowaniaSamochod = zmianaHamowaniaSamochod;
+        this.zmianaSzybkosciReakcjiKierowcy = zmianaSzybkosciReakcjiKierowcy;
         this.nazwaPogody = nazwaPogody;
     }
 
 
 
-    public Integer getZmianaSzybkosci() {
-        return zmianaSzybkosci;
+    public Integer getZmianaSzybkosciSamochod() {
+        return zmianaSzybkosciSamochod;
     }
 
-    public Integer getZmianaHamowania() { return zmianaHamowania; }
+    public Integer getZmianaHamowaniaSamochod() { return zmianaHamowaniaSamochod; }
 
-    public Integer getZmianaSzybkosciReakcji() {
-        return zmianaSzybkosciReakcji;
+    public Integer getZmianaSzybkosciReakcjiKierowcy() {
+        return zmianaSzybkosciReakcjiKierowcy;
     }
 
     public String getNazwaPogody() {

@@ -35,22 +35,33 @@ public abstract class Kierowca {
         this.szybkoscReakcji = szybkoscReakcji;
     }
 
-    public boolean czyTrzezwy(Kierowca kierowca) {
+    public boolean czyTrzezwy() {
         boolean trzezwosc = true;
         if (getStanTrzezwosci() >= 4) {
             trzezwosc = false;
-            zmniejszenieReakcji(kierowca);
+            zmniejszenieReakcji();
         }
         return trzezwosc;
     }
 
-    public void zmniejszenieReakcji(Kierowca kierowca) {
+    private void zmniejszenieReakcji() {
         if (getSzybkoscReakcji() <= 2) {
             setSzybkoscReakcji(0);
         }
-        kierowca.setSzybkoscReakcji(getSzybkoscReakcji() - 3);
+        setSzybkoscReakcji(getSzybkoscReakcji() - 3);
         System.out.println("Kierowca " + getTypKierowcy() + " jest nietrzeźwy więc ma wolniejszą reakcję równą " + getSzybkoscReakcji());
     }
+
+    public void aktualizacjaReakcjiOdPogody( Pogoda pogoda) {
+        Integer zmianaSzybkosciReakcji = getSzybkoscReakcji() + pogoda.getZmianaSzybkosciReakcjiKierowcy();
+        setSzybkoscReakcji(zmianaSzybkosciReakcji);
+        if (getSzybkoscReakcji() < 0){
+            setSzybkoscReakcji(0);
+        }
+        System.out.println("Ze względu na pogodę reakcja kierowcy " + getTypKierowcy() + " to: " + getSzybkoscReakcji());
+    }
+
+
 
     @Override
     public String toString() {

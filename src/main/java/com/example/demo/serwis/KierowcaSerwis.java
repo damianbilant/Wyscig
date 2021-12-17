@@ -23,7 +23,7 @@ public class KierowcaSerwis {
                 break;
         }
         System.out.println("Nowy kierowca to: " + kierowca.toString());
-        kierowca.czyTrzezwy(kierowca);
+        kierowca.czyTrzezwy();
         return kierowca;
     }
 
