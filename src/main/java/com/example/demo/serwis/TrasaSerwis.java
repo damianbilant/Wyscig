@@ -48,7 +48,7 @@ public class TrasaSerwis {
         return trasaLevel;
     }
 
-    public Trasa stworzTrase(TrasaLevel poziomTrudnosci) {
+    public Trasa stworzTrase(Pogoda pogoda,TrasaLevel poziomTrudnosci ) {
         Integer iloscOdcinkowProstych = poziomTrudnosci.getIloscOdcinkowProstych();
         Integer iloscPodjazdow = poziomTrudnosci.getIloscPodjazdow();
         Integer iloscZakretow = poziomTrudnosci.getIloscZakretow();
@@ -83,9 +83,9 @@ public class TrasaSerwis {
         }
 
         powtarzalnoscOdcinkow(listaOdcinkow);
-sumowanieDlugosciPowtarzalnychPoziomowOdcinkow(listaOdcinkow);
+        sumowanieDlugosciPowtarzalnychPoziomowOdcinkow(listaOdcinkow);
 
-        Trasa trasa = new Trasa(listaOdcinkow);
+        Trasa trasa = new Trasa(pogoda, listaOdcinkow);
 
         System.out.println("Poziom trudności trasy: " + poziomTrudnosci.getNazwaPoziomuTrasy() + ", długość trasy: " + sumowanieTrasy(listaOdcinkow) + " km");
         System.out.println("Trasa składa się z odcinków:");
@@ -130,6 +130,7 @@ sumowanieDlugosciPowtarzalnychPoziomowOdcinkow(listaOdcinkow);
                 listaOdcinkow.remove(i);
                 sumowanieDlugosciPowtarzalnychPoziomowOdcinkow(listaOdcinkow);
             }
+
         }
     }
 }

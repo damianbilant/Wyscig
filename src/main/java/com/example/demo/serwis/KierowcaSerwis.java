@@ -3,8 +3,6 @@ package com.example.demo.serwis;
 import com.example.demo.model.*;
 import org.springframework.stereotype.Service;
 
-import java.util.Random;
-
 @Service
 
 public class KierowcaSerwis {
@@ -15,8 +13,11 @@ public class KierowcaSerwis {
             case UBER:
                 kierowca = new KierowcaUber();
                 break;
-            case STARYDZIAD:
+            case DZIAD:
                 kierowca = new KierowcaDziad();
+                break;
+            case BOR:
+                kierowca = new KierowcaBOR();
                 break;
             default:
                 kierowca = null;

@@ -11,14 +11,18 @@ public class WyscigSerwis {
         System.out.println();
 
         TrasaSerwis trasaSerwis = new TrasaSerwis();
-        trasaSerwis.stworzTrase(trasaSerwis.wylosujPoziomTrudnosci());
+        Trasa trasa = trasaSerwis.stworzTrase(pogoda, trasaSerwis.wylosujPoziomTrudnosci());
+
 
         KierowcaSerwis kierowcaSerwis = new KierowcaSerwis();
         System.out.println();
         Kierowca uber = kierowcaSerwis.stworzKierowce(TypKierowcy.UBER);
         uber.aktualizacjaReakcjiOdPogody(pogoda);
-        Kierowca starydziad = kierowcaSerwis.stworzKierowce(TypKierowcy.STARYDZIAD);
+        Kierowca starydziad = kierowcaSerwis.stworzKierowce(TypKierowcy.DZIAD);
         starydziad.aktualizacjaReakcjiOdPogody(pogoda);
+        System.out.println();
+        Kierowca bor = kierowcaSerwis.stworzKierowce(TypKierowcy.BOR);
+        bor.aktualizacjaReakcjiOdPogody(pogoda);
         System.out.println();
 
 
@@ -32,5 +36,21 @@ public class WyscigSerwis {
         Samochod hatchback = samochodSerwis.stworzSamochod(TypSamochodu.HATCHBACK);
         hatchback.aktualizacjaSzybkosciIhamowania(pogoda);
         System.out.println();
+
+        Odcinek odcinek = trasa.getListaOdcinkow().get(0);
+        suv.dodajCzasPrzejazduOdcinka(suv.szybkoscPrzejazduOdcinka(odcinek));
+        Odcinek odcinek2 = trasa.getListaOdcinkow().get(1);
+        suv.dodajCzasPrzejazduOdcinka(suv.szybkoscPrzejazduOdcinka(odcinek2));
+        Odcinek odcinek3 = trasa.getListaOdcinkow().get(2);
+        suv.dodajCzasPrzejazduOdcinka(suv.szybkoscPrzejazduOdcinka(odcinek3));
+
+
+        suv.dodajPrzejechanyDystans(odcinek);
+
+        suv.dodajPrzejechanyDystans(odcinek2);
+
+        suv.dodajPrzejechanyDystans(odcinek3);
     }
+
+
 }

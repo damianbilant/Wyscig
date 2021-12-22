@@ -1,18 +1,21 @@
 package com.example.demo.model;
 
-import com.example.demo.serwis.KierowcaSerwis;
+
 
 public abstract class Kierowca {
     private TypKierowcy typKierowcy;
     private Integer znajomoscTrasy;
     private Integer stanTrzezwosci;
     private Integer szybkoscReakcji;
+    private Integer zycieKierowcy;
 
-    public Kierowca(TypKierowcy typKierowcy, Integer znajomoscTrasy, Integer stanTrzezwosci, Integer szybkoscReakcji) {
+
+    public Kierowca(TypKierowcy typKierowcy, Integer znajomoscTrasy, Integer stanTrzezwosci, Integer szybkoscReakcji, Integer zycieKierowcy) {
         this.typKierowcy = typKierowcy;
         this.znajomoscTrasy = znajomoscTrasy;
         this.stanTrzezwosci = stanTrzezwosci;
         this.szybkoscReakcji = szybkoscReakcji;
+        this.zycieKierowcy = zycieKierowcy;
     }
 
     public TypKierowcy getTypKierowcy() {
@@ -29,6 +32,13 @@ public abstract class Kierowca {
 
     public Integer getSzybkoscReakcji() {
         return szybkoscReakcji;
+    }
+
+    public Integer getZycieKierowcy() {
+        return  zycieKierowcy; }
+
+    public void setZycieKierowcy(Integer zycieKierowcy) {
+        this.zycieKierowcy = zycieKierowcy;
     }
 
     public void setSzybkoscReakcji(Integer szybkoscReakcji) {
@@ -61,7 +71,33 @@ public abstract class Kierowca {
         System.out.println("Ze względu na pogodę reakcja kierowcy " + getTypKierowcy() + " to: " + getSzybkoscReakcji());
     }
 
+    public void aktualizacjaZycia (Integer punktyZyciaDoZmniejszenia) {
+        Integer zmniejszeniePunktowZycia = getZycieKierowcy() - punktyZyciaDoZmniejszenia;
+        setZycieKierowcy(zmniejszeniePunktowZycia);
+        if (getZycieKierowcy() <= 0){
+            System.out.println("Kierowca " + getTypKierowcy() + " nie wytrzymał trudów wyścigu i muszą się nim zająć służby medyczne.");
+            System.out.println("GAME OVER");
+        }
+    }
 
+    public void znajomoscTrasyPredkosc (Samochod samochod){
+        if(getZnajomoscTrasy() >= 9){
+            samochod.setSzybkosc(samochod.getSzybkosc() + 15);
+            System.out.println("Ze względu na bardzo dobrą znajomość trasy kierowcy " + getTypKierowcy() +
+                    " prędkość na tym odcinku (prostym) zostaje zwiększona o 15 km/h i wynosi " + samochod.getSzybkosc());
+        } else if ( getZnajomoscTrasy() >= 7 ){
+            samochod.setSzybkosc(samochod.getSzybkosc() + 5);
+            System.out.println("Ze względu na dobrą znajomość trasy kierowcy " + getTypKierowcy() +
+                    " prędkość na tym odcinku (prostym) zostaje zwiększona o 5 km/h i wynosi " + samochod.getSzybkosc());
+        }
+    }
+    public  void znajomoscTrasyPredkoscReset (Samochod samochod){
+        if(getZnajomoscTrasy() >= 9) {
+            samochod.setSzybkosc(samochod.getSzybkosc() - 15);
+        } else if ( getZnajomoscTrasy() >= 7) {
+            samochod.setSzybkosc(samochod.getSzybkosc() - 5);
+        }
+    }
 
     @Override
     public String toString() {

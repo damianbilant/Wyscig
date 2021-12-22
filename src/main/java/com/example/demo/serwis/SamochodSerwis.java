@@ -3,6 +3,8 @@ package com.example.demo.serwis;
 import com.example.demo.model.*;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 
 public class SamochodSerwis {
@@ -26,8 +28,9 @@ public class SamochodSerwis {
         System.out.println("Nowy samochód to: " + samochod.toString());
         samochod.wyliczenieDrogiHamowania(samochod);
         return samochod;
-    }
 
+
+    }
 
     }
 
