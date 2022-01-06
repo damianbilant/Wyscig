@@ -23,8 +23,10 @@ public class KierowcaSerwis {
                 kierowca = null;
                 break;
         }
+
+        kierowca.nietrzezwoscZmniejszenieReakcji();
+        kierowca.ustawienieRyzyka();
         System.out.println("Nowy kierowca to: " + kierowca.toString());
-        kierowca.czyTrzezwy();
         return kierowca;
     }
 

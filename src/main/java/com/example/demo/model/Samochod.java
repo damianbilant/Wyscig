@@ -19,6 +19,15 @@ public abstract class Samochod {
     private Integer drogaHamowania;
     private Double czasPrzejazdu = 0.0;
     private Integer przejechanyDystans = 0;
+    private Integer licznikZmianyPredkosci = 0;
+
+    public Integer getLicznikZmianyPredkosci() {
+        return licznikZmianyPredkosci;
+    }
+
+    public void setLicznikZmianyPredkosci(Integer licznikZmianyPredkosci) {
+        this.licznikZmianyPredkosci = licznikZmianyPredkosci;
+    }
 
     public Double getCzasPrzejazdu() {
         return czasPrzejazdu;
@@ -37,7 +46,8 @@ public abstract class Samochod {
     }
 
     public TypSamochodu getTypSamochodu() {
-        return  typSamochodu; }
+        return typSamochodu;
+    }
 
     public Integer getCiezar() {
         return ciezar;
@@ -63,14 +73,14 @@ public abstract class Samochod {
         this.wytrzymaloscSamochodu = wytrzymaloscSamochodu;
     }
 
-    public Integer zamianaJednostek (Samochod samochod){
+    public Integer zamianaJednostek(Samochod samochod) {
         Double x = 1000.0 / 3600.0;
         Double zmienionaSzybkosc = samochod.getSzybkosc() * x;
         int zaokraglonaSzybkosc = zmienionaSzybkosc.intValue();
-        return  zaokraglonaSzybkosc;
+        return zaokraglonaSzybkosc;
     }
 
-    public Integer wyliczenieDrogiHamowania (Samochod samochod){
+    public Integer wyliczenieDrogiHamowania(Samochod samochod) {
         Integer y = (samochod.getCiezar() * zamianaJednostek(samochod));
         Integer drogaHamowania = y / samochod.getSkutecznoscHamowania();
         setDrogaHamowania(drogaHamowania);
@@ -78,7 +88,8 @@ public abstract class Samochod {
         return drogaHamowania;
     }
 
-    private   void aktualizacjaSzybkosciOdPogody(Pogoda pogoda){
+
+    private void aktualizacjaSzybkosciOdPogody(Pogoda pogoda) {
         pogoda.getZmianaSzybkosciSamochod();
         getSzybkosc();
         Integer zmianaSzybkosci = getSzybkosc() + pogoda.getZmianaSzybkosciSamochod();
@@ -88,27 +99,27 @@ public abstract class Samochod {
     }
 
 
-    private   void aktualizacjaHamowaniaOdPogody(Pogoda pogoda){
+    private void aktualizacjaHamowaniaOdPogody(Pogoda pogoda) {
         pogoda.getZmianaHamowaniaSamochod();
         getDrogaHamowania();
         Integer zmianaHamowania = getDrogaHamowania() + pogoda.getZmianaHamowaniaSamochod();
         setDrogaHamowania(zmianaHamowania);
-        if (getDrogaHamowania() < 30 ) {
+        if (getDrogaHamowania() < 30) {
             setDrogaHamowania(30);
         }
         System.out.println("Ze względu na pogodę droga hamowania samochodu " + getTypSamochodu() + " to: " + getDrogaHamowania());
     }
 
-    public void aktualizacjaSzybkosciIhamowania(Pogoda pogoda){
+    public void aktualizacjaSzybkosciIhamowania(Pogoda pogoda) {
         aktualizacjaHamowaniaOdPogody(pogoda);
         aktualizacjaSzybkosciOdPogody(pogoda);
 
     }
 
-    public void aktualizacjaWytrzymalosci (Integer zmniejszeniePunktowWytrzymalosciSamochodu) {
+    public void aktualizacjaWytrzymalosci(Integer zmniejszeniePunktowWytrzymalosciSamochodu) {
         Integer zmniejszenieWytrzymalosciSamochodu = getWytrzymaloscSamochodu() - zmniejszeniePunktowWytrzymalosciSamochodu;
         setWytrzymaloscSamochodu(zmniejszenieWytrzymalosciSamochodu);
-        if (getWytrzymaloscSamochodu() <= 0){
+        if (getWytrzymaloscSamochodu() <= 0) {
             System.out.println("Samochód " + getTypSamochodu() + " nie wytrzymał trudów wyścigu i nadaje się już tylko na złom.");
             System.out.println("GAME OVER");
         }
@@ -118,32 +129,57 @@ public abstract class Samochod {
         double s = Double.valueOf(odcinek.getDlugoscOdcinka());
         double v = Double.valueOf(getSzybkosc());
         double czasPrzejazduOdcinka = s / v;
-       // System.out.println(czasPrzejazduOdcinka);
+        // System.out.println(czasPrzejazduOdcinka);
         return czasPrzejazduOdcinka;
     }
 
-    public void dodajCzasPrzejazduOdcinka(Double czasPrzejazduOdcinka){
+    public void dodajCzasPrzejazduOdcinka(Double czasPrzejazduOdcinka) {
         czasPrzejazdu += czasPrzejazduOdcinka;
         //czasPrzejazdu = czasPrzejazduOdcinka + czasPrzejazdu;
         System.out.println("Czas total " + getCzasPrzejazdu());
         System.out.println("Czas odcinka " + czasPrzejazduOdcinka);
     }
 
-    public void resetCzasuPrzejazdu(){
+    public void resetCzasuPrzejazdu() {
 
     }
-    public void dodajPrzejechanyDystans(Odcinek odcinek){
+
+    public void dodajPrzejechanyDystans(Odcinek odcinek) {
         przejechanyDystans += odcinek.getDlugoscOdcinka();
         System.out.println("Dystans total " + getPrzejechanyDystans());
         System.out.println("Dystans odcinka " + odcinek.getDlugoscOdcinka());
     }
 
-    public void resetPrzejechanegoDystansu(){
+    public void resetPrzejechanegoDystansu() {
 
+    }
+
+    public void limitZmianyPredkosciIzmianaPredkosci(Integer nowaszybkosc) {
+        if (licznikZmianyPredkosci == 0) {
+            if (getSzybkosc() > nowaszybkosc || getSzybkosc() < nowaszybkosc) {
+                licznikZmianyPredkosci += 1;
+            }
+            if (licznikZmianyPredkosci == 1) {
+                if (getSzybkosc() < nowaszybkosc) {
+                    licznikZmianyPredkosci += 1;
+                    setSzybkosc(nowaszybkosc);
+                }
+            } else {
+                licznikZmianyPredkosci -= 1;
+                setSzybkosc(nowaszybkosc);
+            }
+            if (licznikZmianyPredkosci == 2) {
+                if (getSzybkosc() > nowaszybkosc) {
+                    licznikZmianyPredkosci -= 1;
+                    setSzybkosc(nowaszybkosc);
+                }
+            }
+
+        }
     }
 
     @Override
     public String toString() {
-    return "typ samochodu : " + getTypSamochodu() + ", ciężar samochodu : " + getCiezar() + " kg" + ", skuteczność hamowania samochodu : " + getSkutecznoscHamowania() + ", szybkość max samochodu : " + getSzybkosc() + " km/h";
+        return "typ samochodu : " + getTypSamochodu() + ", ciężar samochodu : " + getCiezar() + " kg" + ", skuteczność hamowania samochodu : " + getSkutecznoscHamowania() + ", szybkość max samochodu : " + getSzybkosc() + " km/h";
     }
 }

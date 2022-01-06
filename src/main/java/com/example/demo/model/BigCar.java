@@ -1,6 +1,5 @@
 package com.example.demo.model;
 
-import com.example.demo.serwis.SamochodSerwis;
 import com.example.demo.utils.Utils;
 
 public class BigCar extends Samochod {
