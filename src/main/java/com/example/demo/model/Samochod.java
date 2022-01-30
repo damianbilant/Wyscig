@@ -19,14 +19,23 @@ public abstract class Samochod {
     private Integer drogaHamowania;
     private Double czasPrzejazdu = 0.0;
     private Integer przejechanyDystans = 0;
-    private Integer licznikZmianyPredkosci = 0;
+    private Integer licznikWzrostuPredkosci = 0;
+    private Integer licznikSpadkuPredkosci = 0;
 
-    public Integer getLicznikZmianyPredkosci() {
-        return licznikZmianyPredkosci;
+    public Integer getLicznikWzrostuPredkosci() {
+        return licznikWzrostuPredkosci;
     }
 
-    public void setLicznikZmianyPredkosci(Integer licznikZmianyPredkosci) {
-        this.licznikZmianyPredkosci = licznikZmianyPredkosci;
+    public void setLicznikWzrostuPredkosci(Integer licznikWzrostuPredkosci) {
+        this.licznikWzrostuPredkosci = licznikWzrostuPredkosci;
+    }
+
+    public Integer getLicznikSpadkuPredkosci() {
+        return licznikSpadkuPredkosci;
+    }
+
+    public void setLicznikSpadkuPredkosci(Integer licznikSpadkuPredkosci) {
+        this.licznikSpadkuPredkosci = licznikSpadkuPredkosci;
     }
 
     public Double getCzasPrzejazdu() {
@@ -155,28 +164,26 @@ public abstract class Samochod {
     }
 
     public void limitZmianyPredkosciIzmianaPredkosci(Integer nowaszybkosc) {
-        if (licznikZmianyPredkosci == 0) {
-            if (getSzybkosc() > nowaszybkosc || getSzybkosc() < nowaszybkosc) {
-                licznikZmianyPredkosci += 1;
-            }
-            if (licznikZmianyPredkosci == 1) {
-                if (getSzybkosc() < nowaszybkosc) {
-                    licznikZmianyPredkosci += 1;
-                    setSzybkosc(nowaszybkosc);
-                }
-            } else {
-                licznikZmianyPredkosci -= 1;
+        if (licznikWzrostuPredkosci == 0 || licznikWzrostuPredkosci == 1 ) {
+            if (getSzybkosc() < nowaszybkosc) {
+                licznikWzrostuPredkosci += 1;
                 setSzybkosc(nowaszybkosc);
-            }
-            if (licznikZmianyPredkosci == 2) {
-                if (getSzybkosc() > nowaszybkosc) {
-                    licznikZmianyPredkosci -= 1;
-                    setSzybkosc(nowaszybkosc);
+                if (licznikSpadkuPredkosci > 0) {
+                    licznikSpadkuPredkosci -= 1;
                 }
             }
-
         }
-    }
+        if(licznikSpadkuPredkosci == 0 || licznikSpadkuPredkosci == 1){
+                if (getSzybkosc() > nowaszybkosc) {
+                  licznikSpadkuPredkosci +=1;
+                    setSzybkosc(nowaszybkosc);
+                    if (licznikWzrostuPredkosci > 0) {
+                        licznikWzrostuPredkosci -= 1;
+                    }
+                }
+            }
+        }
+
 
     @Override
     public String toString() {
