@@ -48,7 +48,7 @@ public class TrasaSerwis {
         return trasaLevel;
     }
 
-    public Trasa stworzTrase(Pogoda pogoda,TrasaLevel poziomTrudnosci ) {
+    public Trasa stworzTrase(Pogoda pogoda, TrasaLevel poziomTrudnosci) {
         Integer iloscOdcinkowProstych = poziomTrudnosci.getIloscOdcinkowProstych();
         Integer iloscPodjazdow = poziomTrudnosci.getIloscPodjazdow();
         Integer iloscZakretow = poziomTrudnosci.getIloscZakretow();
@@ -93,12 +93,14 @@ public class TrasaSerwis {
         for (Odcinek odcinek : listaOdcinkow) {
             System.out.println(odcinek.getNazwaOdcinka() + ", długość " + odcinek.getDlugoscOdcinka() + " km, " + "poziom trudności " + odcinek.getTrudnoscOdcinka());
         }
+        System.out.println();
         return trasa;
     }
-    private void powtarzalnoscOdcinkow(List<Odcinek>listaOdcinkow) {
+
+    private void powtarzalnoscOdcinkow(List<Odcinek> listaOdcinkow) {
         Integer licznikOdcinkow = 1;
         for (int i = 1; i < listaOdcinkow.size(); i++) {
-            if (listaOdcinkow.get(i).getTypOdcinka().equals(listaOdcinkow.get(i-1).getTypOdcinka())) {
+            if (listaOdcinkow.get(i).getTypOdcinka().equals(listaOdcinkow.get(i - 1).getTypOdcinka())) {
                 licznikOdcinkow += 1;
                 if (licznikOdcinkow == 4) {
                     Collections.shuffle(listaOdcinkow);
@@ -109,29 +111,31 @@ public class TrasaSerwis {
             }
         }
     }
-    private Integer sumowanieTrasy(List<Odcinek>listaOdcinkow) {
+
+    private Integer sumowanieTrasy(List<Odcinek> listaOdcinkow) {
         int suma = 0;
-        for(Odcinek odcinek : listaOdcinkow){
+        for (Odcinek odcinek : listaOdcinkow) {
             suma += odcinek.getDlugoscOdcinka();
         }
         return suma;
     }
-    private void sumowanieDlugosciPowtarzalnychPoziomowOdcinkow(List<Odcinek>listaOdcinkow) {
+
+    private void sumowanieDlugosciPowtarzalnychPoziomowOdcinkow(List<Odcinek> listaOdcinkow) {
         for (int i = 1; i < listaOdcinkow.size(); i++) {
-        if (listaOdcinkow.get(i).getTypOdcinka().equals(listaOdcinkow.get(i-1).getTypOdcinka())) {
-            if(listaOdcinkow.get(i).getTrudnoscOdcinka().equals(listaOdcinkow.get(i-1).getTrudnoscOdcinka())){
-                int dlugoscOdcinka1 = listaOdcinkow.get(i).getDlugoscOdcinka();
-                int dlugoscOdcinka2 = listaOdcinkow.get(i-1).getDlugoscOdcinka();
-                int suma = dlugoscOdcinka2 + dlugoscOdcinka1;
+            if (listaOdcinkow.get(i).getTypOdcinka().equals(listaOdcinkow.get(i - 1).getTypOdcinka())) {
+                if (listaOdcinkow.get(i).getTrudnoscOdcinka().equals(listaOdcinkow.get(i - 1).getTrudnoscOdcinka())) {
+                    int dlugoscOdcinka1 = listaOdcinkow.get(i).getDlugoscOdcinka();
+                    int dlugoscOdcinka2 = listaOdcinkow.get(i - 1).getDlugoscOdcinka();
+                    int suma = dlugoscOdcinka2 + dlugoscOdcinka1;
                /* System.out.println("zsumowało!!!!!!!!!!!!!!!!!!");
                 System.out.println(dlugoscOdcinka1 + " długość 1 " + dlugoscOdcinka2 + " długość 2 " + listaOdcinkow.get(i).getTrudnoscOdcinka() +
                         " poziom1 " + listaOdcinkow.get(i-1).getTrudnoscOdcinka() + " poziom2");*/
-                listaOdcinkow.get(i-1).setDlugoscOdcinka(suma);
-                listaOdcinkow.remove(i);
-                sumowanieDlugosciPowtarzalnychPoziomowOdcinkow(listaOdcinkow);
-            }
+                    listaOdcinkow.get(i - 1).setDlugoscOdcinka(suma);
+                    listaOdcinkow.remove(i);
+                    sumowanieDlugosciPowtarzalnychPoziomowOdcinkow(listaOdcinkow);
+                }
 
+            }
         }
     }
-}
 }

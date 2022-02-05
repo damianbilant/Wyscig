@@ -4,5 +4,4 @@ public enum TypSamochodu {
     SUV,
     COUPE,
     HATCHBACK
-
 }

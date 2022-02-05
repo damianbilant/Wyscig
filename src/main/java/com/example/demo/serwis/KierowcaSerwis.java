@@ -28,7 +28,6 @@ public class KierowcaSerwis {
                 break;
         }
 
-
         kierowca.nietrzezwoscZmniejszenieReakcji();
         kierowca.ustawienieRyzyka();
         System.out.println("Nowy kierowca to: " + kierowca.toString());
@@ -37,7 +36,7 @@ public class KierowcaSerwis {
 
     public Kierowca losowoStworzKierowce() {
         ArrayList<TypKierowcy> listaTypowKierowcy = new ArrayList<>(Arrays.asList(TypKierowcy.values()));
-        Kierowca kierowca = null;
+        Kierowca kierowca;
 
         int wylosowanyIndex = Utils.losuj(0, listaTypowKierowcy.size() - 1);
 

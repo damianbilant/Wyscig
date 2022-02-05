@@ -11,7 +11,6 @@ public enum TrasaLevel {
     private Integer iloscZjazdow;
     private String nazwaPoziomuTrasy;
 
-
     TrasaLevel(Integer iloscOdcinkowProstych, Integer iloscZakretow, Integer iloscPodjazdow, Integer iloscZjazdow, String nazwaPoziomuTrasy) {
         this.iloscOdcinkowProstych = iloscOdcinkowProstych;
         this.iloscZakretow = iloscZakretow;

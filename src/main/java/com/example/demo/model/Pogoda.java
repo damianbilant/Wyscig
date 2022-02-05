@@ -6,12 +6,10 @@ public enum Pogoda {
     RAINY(-15,30,-1, "deszczowa"),
     SNOWY(-50,75,-2, "śnieżna");
 
-
     private Integer zmianaSzybkosciSamochod;
     private Integer zmianaHamowaniaSamochod;
     private Integer zmianaSzybkosciReakcjiKierowcy;
     private String nazwaPogody;
-
 
     Pogoda(Integer zmianaSzybkosciSamochod, Integer zmianaHamowaniaSamochod, Integer zmianaSzybkosciReakcjiKierowcy, String nazwaPogody) {
         this.zmianaSzybkosciSamochod = zmianaSzybkosciSamochod;
@@ -19,8 +17,6 @@ public enum Pogoda {
         this.zmianaSzybkosciReakcjiKierowcy = zmianaSzybkosciReakcjiKierowcy;
         this.nazwaPogody = nazwaPogody;
     }
-
-
 
     public Integer getZmianaSzybkosciSamochod() {
         return zmianaSzybkosciSamochod;

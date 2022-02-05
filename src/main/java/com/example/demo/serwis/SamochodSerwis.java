@@ -32,6 +32,8 @@ public class SamochodSerwis {
 
     }
 
+    //TODO: zrób metodę losowoStworzSamochod
+
     }
 
 

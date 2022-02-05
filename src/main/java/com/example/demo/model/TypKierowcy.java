@@ -4,5 +4,4 @@ public enum TypKierowcy {
     UBER,
     DZIAD,
     BOR
-
 }
