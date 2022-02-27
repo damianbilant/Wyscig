@@ -18,38 +18,25 @@ public class WyscigSerwis {
 
 
         KierowcaSerwis kierowcaSerwis = new KierowcaSerwis();
-       /* System.out.println();
-        Kierowca uber = kierowcaSerwis.stworzKierowce(TypKierowcy.UBER);
-        uber.aktualizacjaReakcjiOdPogody(pogoda);
-        Kierowca starydziad = kierowcaSerwis.stworzKierowce(TypKierowcy.DZIAD);
-        starydziad.aktualizacjaReakcjiOdPogody(pogoda);
-        Kierowca bor = kierowcaSerwis.stworzKierowce(TypKierowcy.BOR);
-        bor.aktualizacjaReakcjiOdPogody(pogoda);
-        System.out.println();*/
-
-
         SamochodSerwis samochodSerwis = new SamochodSerwis();
-        /*Samochod suv = samochodSerwis.stworzSamochod(TypSamochodu.SUV);
-        suv.aktualizacjaSzybkosciIhamowania(pogoda);
-        System.out.println();
-        Samochod coupe = samochodSerwis.stworzSamochod(TypSamochodu.COUPE);
-        coupe.aktualizacjaSzybkosciIhamowania(pogoda);
-        System.out.println();
-        Samochod hatchback = samochodSerwis.stworzSamochod(TypSamochodu.HATCHBACK);
-        hatchback.aktualizacjaSzybkosciIhamowania(pogoda);
-        System.out.println();*/
+        UczestnikSerwis uczestnikSerwis = new UczestnikSerwis();
+        List<Uczestnik> uczestnikList = uczestnikSerwis.stworzUczestnikow(kierowcaSerwis, samochodSerwis);
 
-        Uczestnik uczestnik1 = new Uczestnik(kierowcaSerwis.losowoStworzKierowce(), samochodSerwis.stworzSamochod(TypSamochodu.HATCHBACK));
-        Uczestnik uczestnik2 = new Uczestnik(kierowcaSerwis.losowoStworzKierowce(), samochodSerwis.stworzSamochod(TypSamochodu.HATCHBACK));
-        List<Uczestnik> listaUczestnikow = new ArrayList<>();
-        listaUczestnikow.add(uczestnik1);
-        listaUczestnikow.add(uczestnik2);
-        wyscig(listaUczestnikow, trasa);
+
+        wyscig(uczestnikList, trasa);
 
     }
 
     public void wyscig(List<Uczestnik> listaUczestnikow, Trasa trasa) {
 
+        // metoda (for), która przechodzi przez wszystkich uczestników i aktualizuje hamowanie
+        // w zależności od pogody(metoda w samochpodzie) - aktualizacjaSzybkosciIhamowania
+        System.out.println("Wpływ pogody na samochód:");
+        for (Uczestnik uczestnik : listaUczestnikow) {
+            System.out.println("Samochód uczestnika " + uczestnik.getKierowca() + " to: " + uczestnik.getSamochod());
+            uczestnik.getSamochod().aktualizacjaSzybkosciIhamowania(trasa.getPogoda());
+
+        }
         System.out.println();
         System.out.println("Wszyscy na starcie");
         for (Uczestnik uczestnik : listaUczestnikow) {
@@ -73,8 +60,11 @@ public class WyscigSerwis {
                     obslugaPojedynczegoOdcinka(obecnyOdcinek, null, uczestnik.getSamochod(), uczestnik.getKierowca());
                 }
             }
+            starcie(listaUczestnikow, obecnyOdcinek);
+            //TODO: tabela wyników
         }
     }
+
 
     private void obslugaPojedynczegoOdcinka(Odcinek obecnyOdcinek, Odcinek nastepnyOdcinek, Samochod samochod, Kierowca kierowca) {
 
@@ -87,28 +77,32 @@ public class WyscigSerwis {
         //wyscig
         if (obecnyOdcinek != null && nastepnyOdcinek != null) {
             przejazd(obecnyOdcinek, kierowca, samochod);
-
+            samochod.dodajCzasPrzejazduOdcinka(samochod.szybkoscPrzejazduOdcinka(obecnyOdcinek));
+            samochod.dodajPrzejechanyDystans(obecnyOdcinek);
             System.out.println("Kierowca " + kierowca.getTypKierowcy() + " przejechał odcinek " + obecnyOdcinek.getNazwaOdcinka() +
-                    " w czasie " + samochod.szybkoscPrzejazduOdcinka(obecnyOdcinek) + " godziny");
+                    " w czasie " + samochod.szybkoscPrzejazduOdcinka(obecnyOdcinek) + " minuty");
 
-            // starcie
+
+
 
             nastepnyOdcinek(obecnyOdcinek.getTypOdcinka(), nastepnyOdcinek, samochod, kierowca);
 
-            //tabela wyników
+
         }
 
         //meta - ostatni odcinek
         if (nastepnyOdcinek == null) {
             System.out.println("Już widać metę! Jeszcze tylko jeden odcinek pozostal " + kierowca.getTypKierowcy() + " do pokonania");
             przejazd(obecnyOdcinek, kierowca, samochod);
-
+            samochod.dodajCzasPrzejazduOdcinka(samochod.szybkoscPrzejazduOdcinka(obecnyOdcinek));
+            samochod.dodajPrzejechanyDystans(obecnyOdcinek);
             System.out.println("Kierowca " + kierowca.getTypKierowcy() + " przejechał odcinek " + obecnyOdcinek.getNazwaOdcinka() +
-                    " w czasie " + samochod.szybkoscPrzejazduOdcinka(obecnyOdcinek) + " godziny");
+                    " w czasie " + samochod.szybkoscPrzejazduOdcinka(obecnyOdcinek) + " minuty");
 
-            // starcie
 
-            //tabela wyników
+
+
+
         }
     }
 
@@ -130,6 +124,7 @@ public class WyscigSerwis {
                 break;
         }
     }
+
 
     private void przejazdOdcinekProsty(Odcinek odcinek, Kierowca kierowca, Samochod samochod) {
         String nazwaOdcinka = odcinek.getNazwaOdcinka();
@@ -493,86 +488,114 @@ public class WyscigSerwis {
         }
     }
 
-    private void zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduPrzejazd(String nazwaOdcinka, Samochod samochod, Kierowca kierowca, int minZycieKierowca, int maxZycieKierowca, int minWytrzymaloscSamochodu, int maxWytrzymaloscSamochodu) {
-        kierowca.setZycieKierowcy(kierowca.getZycieKierowcy() - Utils.losuj(minZycieKierowca, maxZycieKierowca));
-        samochod.setWytrzymaloscSamochodu(samochod.getWytrzymaloscSamochodu() - Utils.losuj(minWytrzymaloscSamochodu, maxWytrzymaloscSamochodu));
+
+    private void zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduPrzejazd(String nazwaOdcinka, Samochod samochod, Kierowca kierowca,
+                                                                          int minZycieKierowca, int maxZycieKierowca, int minWytrzymaloscSamochodu,
+                                                                          int maxWytrzymaloscSamochodu) {
+        kierowca.aktualizacjaZycia(minZycieKierowca, maxZycieKierowca);
+        samochod.aktualizacjaWytrzymalosci(minWytrzymaloscSamochodu, maxWytrzymaloscSamochodu);
         System.out.println("Kierowca " + kierowca.getTypKierowcy() + " jadący samochodem " + samochod.getTypSamochodu() + " pokonując odcinek " +
-                nazwaOdcinka + " odniósł obrażenia i teraz jego życie wynosi " + kierowca.getZycieKierowcy() + ", natomiast samochód uległ uszkodzeniu i jego wytrzymałość wynosi " + samochod.getWytrzymaloscSamochodu());
+                nazwaOdcinka + " odniósł obrażenia i teraz jego życie wynosi " + kierowca.getZycieKierowcy() + ", " +
+                "natomiast samochód uległ uszkodzeniu i jego wytrzymałość wynosi " + samochod.getWytrzymaloscSamochodu());
     }
 
-    /*private void zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(String nazwaOdcinka, Samochod samochod, Kierowca kierowca, int minZycieKierowca, int maxZycieKierowca, int minWytrzymaloscSamochodu, int maxWytrzymaloscSamochodu) {
-        kierowca.setZycieKierowcy(kierowca.getZycieKierowcy() - Utils.losuj(minZycieKierowca, maxZycieKierowca));
-        samochod.setWytrzymaloscSamochodu(samochod.getWytrzymaloscSamochodu() - Utils.losuj(minWytrzymaloscSamochodu, maxWytrzymaloscSamochodu));
-        System.out.println("Kierowca " + kierowca.getTypKierowcy() + " jadący samochodem " + samochod.getTypSamochodu() + " pokonujący odcinek " +
-                nazwaOdcinka + " odniósł obrażenia i teraz jego życie wynosi " + kierowca.getZycieKierowcy() +
-                " natomiast samochód uległ uszkodzeniu i jego wytrzymałość wynosi: " + samochod.getWytrzymaloscSamochodu());
-    }*/
+    //TODO: dla tych dwóch metod zmienić aktualizacja życia i wytrzymałości
+    private void zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(String nazwaZdarzenia, String nazwaOdcinka, Uczestnik uczestnik, Uczestnik innyUczestnik, int minZycieKierowca, int maxZycieKierowca, int minWytrzymaloscSamochodu, int maxWytrzymaloscSamochodu) {
+        uczestnik.getKierowca().setZycieKierowcy(uczestnik.getKierowca().getZycieKierowcy() - Utils.losuj(minZycieKierowca, maxZycieKierowca));
+        innyUczestnik.getKierowca().setZycieKierowcy(innyUczestnik.getKierowca().getZycieKierowcy() - Utils.losuj(minZycieKierowca, maxZycieKierowca));
+        uczestnik.getSamochod().setWytrzymaloscSamochodu(uczestnik.getSamochod().getWytrzymaloscSamochodu() - Utils.losuj(minWytrzymaloscSamochodu, maxWytrzymaloscSamochodu));
+        innyUczestnik.getSamochod().setWytrzymaloscSamochodu(innyUczestnik.getSamochod().getWytrzymaloscSamochodu() - Utils.losuj(minWytrzymaloscSamochodu, maxWytrzymaloscSamochodu));
+        System.out.println("Kierowca " + uczestnik.getKierowca().getTypKierowcy() + " jadący samochodem " + uczestnik.getSamochod().getTypSamochodu() +
+                " pokonujący odcinek " + nazwaOdcinka + " miał " + nazwaZdarzenia + " z " + innyUczestnik.getKierowca().getTypKierowcy() + " jadącym samochodem "
+                + innyUczestnik.getSamochod().getTypSamochodu() + ".");
+        //TODO: inne if-y lub switch
+        if (uczestnik.getKierowca().getZycieKierowcy() > 0 && innyUczestnik.getKierowca().getZycieKierowcy() > 0
+                && uczestnik.getSamochod().getWytrzymaloscSamochodu() > 0 && innyUczestnik.getSamochod().getWytrzymaloscSamochodu() > 0) {
+            System.out.println("Obaj odnieśli obrażenia i teraz ich życie wynosi " + uczestnik.getKierowca().getZycieKierowcy() +
+                    " natomiast samochód uległ uszkodzeniu i jego wytrzymałość wynosi: " + uczestnik.getSamochod().getWytrzymaloscSamochodu());
+        }
+    }
 
     private void zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduNastepnyOdcinek(TypOdcinka obecnyOdcinek, TypOdcinka nastepnyOdcinek, Samochod samochod, Kierowca kierowca, int minZycieKierowca, int maxZycieKierowca, int minWytrzymaloscSamochodu, int maxWytrzymaloscSamochodu) {
         kierowca.setZycieKierowcy(kierowca.getZycieKierowcy() - Utils.losuj(minZycieKierowca, maxZycieKierowca));
         samochod.setWytrzymaloscSamochodu(samochod.getWytrzymaloscSamochodu() - Utils.losuj(minWytrzymaloscSamochodu, maxWytrzymaloscSamochodu));
         System.out.println("Kierowca " + kierowca.getTypKierowcy() + " jadący samochodem " + samochod.getTypSamochodu() + " pokonując odcinek " +
-                obecnyOdcinek + " nie dostosował swoich umiejętności i prędkości samochodu do zbliżającego się odcinka " + nastepnyOdcinek + " w wyniku czego odniósł obrażenia. Teraz jego życie wynosi " + kierowca.getZycieKierowcy() +
+                obecnyOdcinek + " nie dostosował swoich umiejętności i prędkości samochodu do zbliżającego się odcinka " + nastepnyOdcinek +
+                " w wyniku czego odniósł obrażenia. Teraz jego życie wynosi " + kierowca.getZycieKierowcy() +
                 ", a samochód uległ uszkodzeniu i jego wytrzymałość wynosi " + samochod.getWytrzymaloscSamochodu());
     }
 
-/*    private void starcie (Map<Kierowca, Samochod> kierujacySamochodem, Odcinek obecnyOdcinek){
-        //mapa gdzie będzie samochód i czas przejazdu, gdzie samochód jest kluczem a czas wartością, posortowane po czasie rosnąco
-        // i porównywanie po czasie elementów w dół
-        String nazwaOdcinka = obecnyOdcinek.getNazwaOdcinka();
-        if((samochod.getCzasPrzejazdu() - innysamochod.getCzasPrzejazdu()) <= 1.0){
-            System.out.println("Wypadek!");
-            if(obecnyOdcinek.getTypOdcinka()==TypOdcinka.ZAKRET){
-            zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(nazwaOdcinka,samochod,kierowca,25,50,25,50);
-        }
-            if(obecnyOdcinek.getTypOdcinka()==TypOdcinka.ZJAZD){
-                zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(nazwaOdcinka,samochod,kierowca,15,30,15,30);
-            }
-            if(obecnyOdcinek.getTypOdcinka()==TypOdcinka.PODJAZD) {
-                zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(nazwaOdcinka,samochod, kierowca, 5, 15, 5, 15);
-            }
-            if(obecnyOdcinek.getTypOdcinka()==TypOdcinka.PROSTY){
-                zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(nazwaOdcinka,samochod,kierowca,0,5,0,5);
-            }
-        }
-            else if((samochod.getCzasPrzejazdu() - innysamochod.getCzasPrzejazdu()) > 1.0 && (samochod.getCzasPrzejazdu() - innysamochod.getCzasPrzejazdu() <= 2.0)){
-                System.out.println("Stłuczka!");
-                if(obecnyOdcinek.getTypOdcinka()==TypOdcinka.ZAKRET){
-                    zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(nazwaOdcinka,samochod,kierowca,15,30,15,30);
-                }
-                if(obecnyOdcinek.getTypOdcinka()==TypOdcinka.ZJAZD){
-                    zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(nazwaOdcinka,samochod,kierowca,10,15,10,15);
-                }
-                if(obecnyOdcinek.getTypOdcinka()==TypOdcinka.PODJAZD){
-                    zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(nazwaOdcinka,samochod, kierowca,5,10,5,10);
-                }
-                if(obecnyOdcinek.getTypOdcinka()==TypOdcinka.PROSTY){
-                    zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(nazwaOdcinka,samochod,kierowca,2,5,2,5);
-                }
-            }
-            else if((samochod.getCzasPrzejazdu() - innysamochod.getCzasPrzejazdu()) > 2.0 && (samochod.getCzasPrzejazdu() - innysamochod.getCzasPrzejazdu() <= 5.0)){
-                System.out.println("Obtarcie!");
-                if(obecnyOdcinek.getTypOdcinka()==TypOdcinka.ZAKRET) {
-                    zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(nazwaOdcinka,samochod, kierowca, 10, 15, 10, 15);
-                }
-                if(obecnyOdcinek.getTypOdcinka()==TypOdcinka.ZJAZD){
-                    zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(nazwaOdcinka,samochod,kierowca,5,10,5,10);
-                }
-                if(obecnyOdcinek.getTypOdcinka()==TypOdcinka.PODJAZD) {
-                    zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(nazwaOdcinka,samochod, kierowca, 2, 5, 2, 5);
-                }
-                if (obecnyOdcinek.getTypOdcinka()==TypOdcinka.PROSTY){
-                    zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(nazwaOdcinka,samochod,kierowca,0,2,0,2);
-                }
-            }
-    }*/
+    public void starcie(List<Uczestnik> listaUczestnikow, Odcinek odcinek) {
+        if (Utils.losuj(1, 4) == 1) {
+            for (Uczestnik uczestnik :
+                    listaUczestnikow) {
+                for (Uczestnik zawodnik :
+                        listaUczestnikow) {
+                    if (!uczestnik.equals(zawodnik)) {
+                        aktualizacjaKierowcaSamochodStarcie(uczestnik, zawodnik, odcinek);
+                        System.out.println(uczestnik.getKierowca().getTypKierowcy() + " " + zawodnik.getKierowca().getTypKierowcy());
 
-    //jesli czas przejazdu odcinka rozni sie o <= 1 min mamy wypadek i znaczny spadek zycia kierowcy i spadek zycia auta
-//jesli czas rozni sie o > 1 min && <= 2 min to mamy stłuczkę i spadki zycia
-//jesli czas rozni sie o > 2 min && <= 5 min to mamy obtarcie i niewielkie spadki zycia
-//spadki zycia i wytrzymalosci auta maja byc duze jesli starcie jest na zakrecie, spore jak jest na zjezdzie,
-// a standardowe dla pozostaych typow odcinkow (podjazd, odcinek prosty).
+                    }
+
+                }
+            }
+        }
+    }
+
+    private void aktualizacjaKierowcaSamochodStarcie(Uczestnik uczestnik, Uczestnik innyUczestnik, Odcinek obecnyOdcinek) {
+
+        String nazwaOdcinka = obecnyOdcinek.getNazwaOdcinka();
+        if ((uczestnik.getSamochod().getCzasPrzejazdu() - innyUczestnik.getSamochod().getCzasPrzejazdu()) > 2.0 && (uczestnik.getSamochod().getCzasPrzejazdu() - innyUczestnik.getSamochod().getCzasPrzejazdu() <= 5.0)) {
+            String nazwaZdarzenia = "wypadek";
+            System.out.println("Wypadek!");
+            if (obecnyOdcinek.getTypOdcinka() == TypOdcinka.ZAKRET) {
+                zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(nazwaZdarzenia, nazwaOdcinka, uczestnik, innyUczestnik, 25, 50, 25, 50);
+            }
+            if (obecnyOdcinek.getTypOdcinka() == TypOdcinka.ZJAZD) {
+                zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(nazwaZdarzenia, nazwaOdcinka, uczestnik, innyUczestnik, 15, 30, 15, 30);
+            }
+            if (obecnyOdcinek.getTypOdcinka() == TypOdcinka.PODJAZD) {
+                zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(nazwaZdarzenia, nazwaOdcinka, uczestnik, innyUczestnik, 5, 15, 5, 15);
+            }
+            if (obecnyOdcinek.getTypOdcinka() == TypOdcinka.PROSTY) {
+                zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(nazwaZdarzenia, nazwaOdcinka, uczestnik, innyUczestnik, 0, 5, 0, 5);
+            }
+        } else if ((uczestnik.getSamochod().getCzasPrzejazdu() - innyUczestnik.getSamochod().getCzasPrzejazdu()) > 1.0 && (uczestnik.getSamochod().getCzasPrzejazdu() - innyUczestnik.getSamochod().getCzasPrzejazdu() <= 2.0)) {
+            String nazwaZdarzenia = "stłuczkę";
+            System.out.println("Stłuczka!");
+            if (obecnyOdcinek.getTypOdcinka() == TypOdcinka.ZAKRET) {
+                zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(nazwaZdarzenia, nazwaOdcinka, uczestnik, innyUczestnik, 15, 30, 15, 30);
+            }
+            if (obecnyOdcinek.getTypOdcinka() == TypOdcinka.ZJAZD) {
+                zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(nazwaZdarzenia, nazwaOdcinka, uczestnik, innyUczestnik, 10, 15, 10, 15);
+            }
+            if (obecnyOdcinek.getTypOdcinka() == TypOdcinka.PODJAZD) {
+                zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(nazwaZdarzenia, nazwaOdcinka, uczestnik, innyUczestnik, 5, 10, 5, 10);
+            }
+            if (obecnyOdcinek.getTypOdcinka() == TypOdcinka.PROSTY) {
+                zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(nazwaZdarzenia, nazwaOdcinka, uczestnik, innyUczestnik, 2, 5, 2, 5);
+            }
+
+        } else if ((uczestnik.getSamochod().getCzasPrzejazdu() - innyUczestnik.getSamochod().getCzasPrzejazdu()) <= 1.0) {
+            String nazwaZdarzenia = "obtarcie";
+            System.out.println("Obtarcie!");
+            if (obecnyOdcinek.getTypOdcinka() == TypOdcinka.ZAKRET) {
+                zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(nazwaZdarzenia, nazwaOdcinka, uczestnik, innyUczestnik, 10, 15, 10, 15);
+            }
+            if (obecnyOdcinek.getTypOdcinka() == TypOdcinka.ZJAZD) {
+                zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(nazwaZdarzenia, nazwaOdcinka, uczestnik, innyUczestnik, 5, 10, 5, 10);
+            }
+            if (obecnyOdcinek.getTypOdcinka() == TypOdcinka.PODJAZD) {
+                zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(nazwaZdarzenia, nazwaOdcinka, uczestnik, innyUczestnik, 2, 5, 2, 5);
+            }
+            if (obecnyOdcinek.getTypOdcinka() == TypOdcinka.PROSTY) {
+                zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(nazwaZdarzenia, nazwaOdcinka, uczestnik, innyUczestnik, 0, 2, 0, 2);
+            }
+        }
+    }
+
+
+
 
 }
-
 

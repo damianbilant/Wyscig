@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 
+import com.example.demo.utils.Utils;
 
 public abstract class Kierowca {
     private TypKierowcy typKierowcy;
@@ -82,7 +83,7 @@ public abstract class Kierowca {
         }
         return trzezwosc;
     }
-
+    //TODO:
     public void aktualizacjaReakcjiOdPogody( Pogoda pogoda) {
         Integer zmianaSzybkosciReakcji = getSzybkoscReakcji() + pogoda.getZmianaSzybkosciReakcjiKierowcy();
         setSzybkoscReakcji(zmianaSzybkosciReakcji);
@@ -92,7 +93,8 @@ public abstract class Kierowca {
         System.out.println("Ze względu na pogodę reakcja kierowcy " + getTypKierowcy() + " to: " + getSzybkoscReakcji());
     }
 
-    public void aktualizacjaZycia (Integer punktyZyciaDoZmniejszenia) {
+    public void aktualizacjaZycia (int minZycieKierowca, int maxZycieKierowca) {
+        Integer punktyZyciaDoZmniejszenia = Utils.losuj(minZycieKierowca, maxZycieKierowca);
         Integer zmniejszeniePunktowZycia = getZycieKierowcy() - punktyZyciaDoZmniejszenia;
         setZycieKierowcy(zmniejszeniePunktowZycia);
         if (getZycieKierowcy() <= 0){
@@ -100,7 +102,7 @@ public abstract class Kierowca {
             System.out.println("GAME OVER");
         }
     }
-
+    //TODO: MICHAŁ
     public void znajomoscTrasyPredkosc (Samochod samochod){
         if(getZnajomoscTrasy() >= 9){
             samochod.setSzybkosc(samochod.getSzybkosc() + 15);

@@ -1,6 +1,8 @@
 package com.example.demo.model;
 
 
+import com.example.demo.utils.Utils;
+
 public abstract class Samochod {
     private TypSamochodu typSamochodu;
     private Integer ciezar;
@@ -22,6 +24,7 @@ public abstract class Samochod {
     private Integer licznikWzrostuPredkosci = 0;
     private Integer licznikSpadkuPredkosci = 0;
 
+    //TODO:użyć
     public Integer getLicznikWzrostuPredkosci() {
         return licznikWzrostuPredkosci;
     }
@@ -125,7 +128,8 @@ public abstract class Samochod {
 
     }
 
-    public void aktualizacjaWytrzymalosci(Integer zmniejszeniePunktowWytrzymalosciSamochodu) {
+    public void aktualizacjaWytrzymalosci(int minWytrzymaloscSamochodu, int maxWytrzymaloscSamochodu) {
+        Integer zmniejszeniePunktowWytrzymalosciSamochodu = Utils.losuj(minWytrzymaloscSamochodu, maxWytrzymaloscSamochodu);
         Integer zmniejszenieWytrzymalosciSamochodu = getWytrzymaloscSamochodu() - zmniejszeniePunktowWytrzymalosciSamochodu;
         setWytrzymaloscSamochodu(zmniejszenieWytrzymalosciSamochodu);
         if (getWytrzymaloscSamochodu() <= 0) {
@@ -134,13 +138,18 @@ public abstract class Samochod {
         }
     }
 
+    //zrobić po przecinku jedno miejsce
     public Double szybkoscPrzejazduOdcinka(Odcinek odcinek) {
         double s = Double.valueOf(odcinek.getDlugoscOdcinka());
         double v = Double.valueOf(getSzybkosc());
-        double czasPrzejazduOdcinka = s / v;
-        // System.out.println(czasPrzejazduOdcinka);
+        double czasPrzejazduOdcinka = (s / v)* 60;
+        czasPrzejazduOdcinka *= 10; //czasPrzejazduOdcinka = czasPrzejazduOdcinka *10;
+        czasPrzejazduOdcinka = Math.round(czasPrzejazduOdcinka);
+        czasPrzejazduOdcinka /= 10; //czasPrzejazduOdcinka = czasPrzejazduOdcinka / 10;
         return czasPrzejazduOdcinka;
     }
+
+
 
     public void dodajCzasPrzejazduOdcinka(Double czasPrzejazduOdcinka) {
         czasPrzejazdu += czasPrzejazduOdcinka;
