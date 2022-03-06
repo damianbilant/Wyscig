@@ -132,10 +132,7 @@ public abstract class Samochod {
         Integer zmniejszeniePunktowWytrzymalosciSamochodu = Utils.losuj(minWytrzymaloscSamochodu, maxWytrzymaloscSamochodu);
         Integer zmniejszenieWytrzymalosciSamochodu = getWytrzymaloscSamochodu() - zmniejszeniePunktowWytrzymalosciSamochodu;
         setWytrzymaloscSamochodu(zmniejszenieWytrzymalosciSamochodu);
-        if (getWytrzymaloscSamochodu() <= 0) {
-            System.out.println("Samochód " + getTypSamochodu() + " nie wytrzymał trudów wyścigu i nadaje się już tylko na złom.");
-            System.out.println("GAME OVER");
-        }
+
     }
 
     //zrobić po przecinku jedno miejsce
@@ -143,7 +140,7 @@ public abstract class Samochod {
         double s = Double.valueOf(odcinek.getDlugoscOdcinka());
         double v = Double.valueOf(getSzybkosc());
         double czasPrzejazduOdcinka = (s / v)* 60;
-        czasPrzejazduOdcinka *= 10; //czasPrzejazduOdcinka = czasPrzejazduOdcinka *10;
+        czasPrzejazduOdcinka *= 10; //czasPrzejazduOdcinka = czasPrzejazduOdcinka * 10;
         czasPrzejazduOdcinka = Math.round(czasPrzejazduOdcinka);
         czasPrzejazduOdcinka /= 10; //czasPrzejazduOdcinka = czasPrzejazduOdcinka / 10;
         return czasPrzejazduOdcinka;

@@ -97,10 +97,6 @@ public abstract class Kierowca {
         Integer punktyZyciaDoZmniejszenia = Utils.losuj(minZycieKierowca, maxZycieKierowca);
         Integer zmniejszeniePunktowZycia = getZycieKierowcy() - punktyZyciaDoZmniejszenia;
         setZycieKierowcy(zmniejszeniePunktowZycia);
-        if (getZycieKierowcy() <= 0){
-            System.out.println("Kierowca " + getTypKierowcy() + " nie wytrzymał trudów wyścigu i muszą się nim zająć służby medyczne.");
-            System.out.println("GAME OVER");
-        }
     }
     //TODO: MICHAŁ
     public void znajomoscTrasyPredkosc (Samochod samochod){

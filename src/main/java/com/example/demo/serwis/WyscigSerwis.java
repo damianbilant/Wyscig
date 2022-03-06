@@ -21,7 +21,8 @@ public class WyscigSerwis {
         SamochodSerwis samochodSerwis = new SamochodSerwis();
         UczestnikSerwis uczestnikSerwis = new UczestnikSerwis();
         List<Uczestnik> uczestnikList = uczestnikSerwis.stworzUczestnikow(kierowcaSerwis, samochodSerwis);
-
+        //?????? czy tutaj
+        uczestnikSerwis.wypisanieUczestnikow(uczestnikList);
 
         wyscig(uczestnikList, trasa);
 
@@ -29,8 +30,7 @@ public class WyscigSerwis {
 
     public void wyscig(List<Uczestnik> listaUczestnikow, Trasa trasa) {
 
-        // metoda (for), która przechodzi przez wszystkich uczestników i aktualizuje hamowanie
-        // w zależności od pogody(metoda w samochpodzie) - aktualizacjaSzybkosciIhamowania
+
         System.out.println("Wpływ pogody na samochód:");
         for (Uczestnik uczestnik : listaUczestnikow) {
             System.out.println("Samochód uczestnika " + uczestnik.getKierowca() + " to: " + uczestnik.getSamochod());
@@ -71,7 +71,7 @@ public class WyscigSerwis {
         //start
         if (obecnyOdcinek == null) {
             System.out.println("Kierowca " + kierowca.getTypKierowcy() + " przekroczył linię startu i rozpoczął zmagania w jakże trudnym wyścigu");
-            nastepnyOdcinek(TypOdcinka.PROSTY, nastepnyOdcinek, samochod, kierowca);
+            nastepnyOdcinek(obecnyOdcinek.getTypOdcinka(), nastepnyOdcinek, samochod, kierowca);
         }
 
         //wyscig
@@ -98,10 +98,6 @@ public class WyscigSerwis {
             samochod.dodajPrzejechanyDystans(obecnyOdcinek);
             System.out.println("Kierowca " + kierowca.getTypKierowcy() + " przejechał odcinek " + obecnyOdcinek.getNazwaOdcinka() +
                     " w czasie " + samochod.szybkoscPrzejazduOdcinka(obecnyOdcinek) + " minuty");
-
-
-
-
 
         }
     }
@@ -488,10 +484,10 @@ public class WyscigSerwis {
         }
     }
 
-
+    //TODO: metoda która usuwa z listyuczestników jak życie lub samochód mniejsze niż 0
     private void zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduPrzejazd(String nazwaOdcinka, Samochod samochod, Kierowca kierowca,
                                                                           int minZycieKierowca, int maxZycieKierowca, int minWytrzymaloscSamochodu,
-                                                                          int maxWytrzymaloscSamochodu) {
+                                                                          int maxWytrzymaloscSamochodu,List<Uczestnik> listaUczestnikow) {
         kierowca.aktualizacjaZycia(minZycieKierowca, maxZycieKierowca);
         samochod.aktualizacjaWytrzymalosci(minWytrzymaloscSamochodu, maxWytrzymaloscSamochodu);
         System.out.println("Kierowca " + kierowca.getTypKierowcy() + " jadący samochodem " + samochod.getTypSamochodu() + " pokonując odcinek " +
@@ -499,8 +495,11 @@ public class WyscigSerwis {
                 "natomiast samochód uległ uszkodzeniu i jego wytrzymałość wynosi " + samochod.getWytrzymaloscSamochodu());
     }
 
-    //TODO: dla tych dwóch metod zmienić aktualizacja życia i wytrzymałości
-    private void zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(String nazwaZdarzenia, String nazwaOdcinka, Uczestnik uczestnik, Uczestnik innyUczestnik, int minZycieKierowca, int maxZycieKierowca, int minWytrzymaloscSamochodu, int maxWytrzymaloscSamochodu) {
+    //TODO: dla tej metody zmienić aktualizacja życia i wytrzymałości
+
+    private void zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduStarcie(String nazwaZdarzenia, String nazwaOdcinka, Uczestnik uczestnik, Uczestnik innyUczestnik,
+                                                                         int minZycieKierowca, int maxZycieKierowca, int minWytrzymaloscSamochodu, int maxWytrzymaloscSamochodu) {
+
         uczestnik.getKierowca().setZycieKierowcy(uczestnik.getKierowca().getZycieKierowcy() - Utils.losuj(minZycieKierowca, maxZycieKierowca));
         innyUczestnik.getKierowca().setZycieKierowcy(innyUczestnik.getKierowca().getZycieKierowcy() - Utils.losuj(minZycieKierowca, maxZycieKierowca));
         uczestnik.getSamochod().setWytrzymaloscSamochodu(uczestnik.getSamochod().getWytrzymaloscSamochodu() - Utils.losuj(minWytrzymaloscSamochodu, maxWytrzymaloscSamochodu));
@@ -508,17 +507,12 @@ public class WyscigSerwis {
         System.out.println("Kierowca " + uczestnik.getKierowca().getTypKierowcy() + " jadący samochodem " + uczestnik.getSamochod().getTypSamochodu() +
                 " pokonujący odcinek " + nazwaOdcinka + " miał " + nazwaZdarzenia + " z " + innyUczestnik.getKierowca().getTypKierowcy() + " jadącym samochodem "
                 + innyUczestnik.getSamochod().getTypSamochodu() + ".");
-        //TODO: inne if-y lub switch
-        if (uczestnik.getKierowca().getZycieKierowcy() > 0 && innyUczestnik.getKierowca().getZycieKierowcy() > 0
-                && uczestnik.getSamochod().getWytrzymaloscSamochodu() > 0 && innyUczestnik.getSamochod().getWytrzymaloscSamochodu() > 0) {
-            System.out.println("Obaj odnieśli obrażenia i teraz ich życie wynosi " + uczestnik.getKierowca().getZycieKierowcy() +
-                    " natomiast samochód uległ uszkodzeniu i jego wytrzymałość wynosi: " + uczestnik.getSamochod().getWytrzymaloscSamochodu());
-        }
+        skutkiStarcia(uczestnik, innyUczestnik);
     }
 
     private void zmniejszanieZyciaKierowcyIwytrzymalosciSamochoduNastepnyOdcinek(TypOdcinka obecnyOdcinek, TypOdcinka nastepnyOdcinek, Samochod samochod, Kierowca kierowca, int minZycieKierowca, int maxZycieKierowca, int minWytrzymaloscSamochodu, int maxWytrzymaloscSamochodu) {
-        kierowca.setZycieKierowcy(kierowca.getZycieKierowcy() - Utils.losuj(minZycieKierowca, maxZycieKierowca));
-        samochod.setWytrzymaloscSamochodu(samochod.getWytrzymaloscSamochodu() - Utils.losuj(minWytrzymaloscSamochodu, maxWytrzymaloscSamochodu));
+        kierowca.aktualizacjaZycia(minZycieKierowca,maxZycieKierowca);
+        samochod.aktualizacjaWytrzymalosci(minWytrzymaloscSamochodu, maxWytrzymaloscSamochodu);
         System.out.println("Kierowca " + kierowca.getTypKierowcy() + " jadący samochodem " + samochod.getTypSamochodu() + " pokonując odcinek " +
                 obecnyOdcinek + " nie dostosował swoich umiejętności i prędkości samochodu do zbliżającego się odcinka " + nastepnyOdcinek +
                 " w wyniku czego odniósł obrażenia. Teraz jego życie wynosi " + kierowca.getZycieKierowcy() +
@@ -539,6 +533,56 @@ public class WyscigSerwis {
 
                 }
             }
+        }
+    }
+
+    private void skutkiStarcia(Uczestnik uczestnik, Uczestnik innyUczestnik) {
+        if (uczestnik.getKierowca().getZycieKierowcy() > 0 && innyUczestnik.getKierowca().getZycieKierowcy() > 0
+                && uczestnik.getSamochod().getWytrzymaloscSamochodu() > 0 && innyUczestnik.getSamochod().getWytrzymaloscSamochodu() > 0) {
+            System.out.println("Obaj odnieśli obrażenia i teraz ich życie wynosi " + uczestnik.getKierowca().getZycieKierowcy() + " " + innyUczestnik.getKierowca().getZycieKierowcy() +
+                    " natomiast samochody uległy uszkodzeniu i ich wytrzymałości wynoszą: " + uczestnik.getSamochod().getWytrzymaloscSamochodu() + " " + innyUczestnik.getSamochod().getWytrzymaloscSamochodu() + ".");
+        } else if (uczestnik.getKierowca().getZycieKierowcy() <= 0 && innyUczestnik.getKierowca().getZycieKierowcy() > 0
+                && uczestnik.getSamochod().getWytrzymaloscSamochodu() > 0 && innyUczestnik.getSamochod().getWytrzymaloscSamochodu() > 0) {
+            System.out.println("Kierowca " + uczestnik.getKierowca().getTypKierowcy() + " nie wytrzymał trudów wyścigu i muszą się nim zająć służby medyczne. Kierowca " + innyUczestnik.getKierowca().getTypKierowcy() +
+                    " odniósł obrażenia i teraz jego życie wynosi " + innyUczestnik.getKierowca().getZycieKierowcy() + " natomiast samochody uległy uszkodzeniu i ich wytrzymałości wynoszą: " +
+                    uczestnik.getSamochod().getWytrzymaloscSamochodu() + " " + innyUczestnik.getSamochod().getWytrzymaloscSamochodu() + ".");
+        } else if (uczestnik.getKierowca().getZycieKierowcy() > 0 && innyUczestnik.getKierowca().getZycieKierowcy() <= 0
+                && uczestnik.getSamochod().getWytrzymaloscSamochodu() > 0 && innyUczestnik.getSamochod().getWytrzymaloscSamochodu() > 0) {
+            System.out.println("Kierowca " + innyUczestnik.getKierowca().getTypKierowcy() + " nie wytrzymał trudów wyścigu i muszą się nim zająć służby medyczne. Kierowca " + uczestnik.getKierowca().getTypKierowcy() +
+                    " odniósł obrażenia i teraz jego życie wynosi " + innyUczestnik.getKierowca().getZycieKierowcy() + " natomiast samochody uległy uszkodzeniu i ich wytrzymałości wynoszą: " +
+                    uczestnik.getSamochod().getWytrzymaloscSamochodu() + " " + innyUczestnik.getSamochod().getWytrzymaloscSamochodu() + ".");
+        } else if (uczestnik.getKierowca().getZycieKierowcy() > 0 && innyUczestnik.getKierowca().getZycieKierowcy() > 0
+                && uczestnik.getSamochod().getWytrzymaloscSamochodu() <= 0 && innyUczestnik.getSamochod().getWytrzymaloscSamochodu() > 0) {
+            System.out.println("Obaj odnieśli obrażenia i teraz ich życie wynosi " + uczestnik.getKierowca().getZycieKierowcy() + " " + innyUczestnik.getKierowca().getZycieKierowcy() +
+                    " natomiast samochód " + uczestnik.getSamochod().getTypSamochodu() + " nie wytrzymał trudów wyścigu i nadaje się już tylko na złom, a samochód " + innyUczestnik.getSamochod().getTypSamochodu() + " uległ uszkodzeniu i jego wytrzymałość wynosi: " + innyUczestnik.getSamochod().getWytrzymaloscSamochodu() + ".");
+        } else if (uczestnik.getKierowca().getZycieKierowcy() > 0 && innyUczestnik.getKierowca().getZycieKierowcy() > 0
+                && uczestnik.getSamochod().getWytrzymaloscSamochodu() > 0 && innyUczestnik.getSamochod().getWytrzymaloscSamochodu() <= 0) {
+            System.out.println("Obaj odnieśli obrażenia i teraz ich życie wynosi " + uczestnik.getKierowca().getZycieKierowcy() + " " + innyUczestnik.getKierowca().getZycieKierowcy() +
+                    " natomiast samochód " + innyUczestnik.getSamochod().getTypSamochodu() + " nie wytrzymał trudów wyścigu i nadaje się już tylko na złom, a samochód " + uczestnik.getSamochod().getTypSamochodu() + " uległ uszkodzeniu i jego wytrzymałość wynosi: " + uczestnik.getSamochod().getWytrzymaloscSamochodu() + ".");
+        } else if (uczestnik.getKierowca().getZycieKierowcy() <= 0 && innyUczestnik.getKierowca().getZycieKierowcy() <= 0
+                && uczestnik.getSamochod().getWytrzymaloscSamochodu() > 0 && innyUczestnik.getSamochod().getWytrzymaloscSamochodu() > 0) {
+            System.out.println("Obaj kierowcy nie wytrzymali trudów wyścigu i muszą się nimi zająć służby medyczne. Natomiast samochody uległy uszkodzeniu i ich wytrzymałości wynoszą: " +
+                    uczestnik.getSamochod().getWytrzymaloscSamochodu() + " " + innyUczestnik.getSamochod().getWytrzymaloscSamochodu() + ".");
+        } else if (uczestnik.getKierowca().getZycieKierowcy() > 0 && innyUczestnik.getKierowca().getZycieKierowcy() > 0
+                && uczestnik.getSamochod().getWytrzymaloscSamochodu() <= 0 && innyUczestnik.getSamochod().getWytrzymaloscSamochodu() <= 0) {
+            System.out.println("Obaj odnieśli obrażenia i teraz ich życie wynosi " + uczestnik.getKierowca().getZycieKierowcy() + " " + innyUczestnik.getKierowca().getZycieKierowcy() +
+                    " .Natomiast samochody nie wytrzymały trudów wyścigu i nadają się już tylko na złom.");
+        } else if (uczestnik.getKierowca().getZycieKierowcy() <= 0 && innyUczestnik.getKierowca().getZycieKierowcy() > 0
+                && uczestnik.getSamochod().getWytrzymaloscSamochodu() <= 0 && innyUczestnik.getSamochod().getWytrzymaloscSamochodu() > 0) {
+            System.out.println("Kierowca " + uczestnik.getKierowca().getTypKierowcy() + " nie wytrzymał trudów wyścigu i muszą się nim zająć służby medyczne, a jego samochód " + uczestnik.getSamochod().getTypSamochodu() + " nadaje się już tylko na złom. Natomiast kierowca " + innyUczestnik.getKierowca().getTypKierowcy() +
+                    " odniósł obrażenia i teraz jego życie wynosi " + innyUczestnik.getKierowca().getZycieKierowcy() + " a jego samochód uległ uszkodzeniu i jego wytrzymałość wynosi: " + innyUczestnik.getSamochod().getWytrzymaloscSamochodu() + ".");
+        } else if (uczestnik.getKierowca().getZycieKierowcy() > 0 && innyUczestnik.getKierowca().getZycieKierowcy() <= 0
+                && uczestnik.getSamochod().getWytrzymaloscSamochodu() > 0 && innyUczestnik.getSamochod().getWytrzymaloscSamochodu() <= 0) {
+            System.out.println("Kierowca " + innyUczestnik.getKierowca().getTypKierowcy() + " nie wytrzymał trudów wyścigu i muszą się nim zająć służby medyczne, a jego samochód " + innyUczestnik.getSamochod().getTypSamochodu() + " nadaje się już tylko na złom. Natomiast kierowca " + uczestnik.getKierowca().getTypKierowcy() +
+                    " odniósł obrażenia i teraz jego życie wynosi " + uczestnik.getKierowca().getZycieKierowcy() + " a jego samochód uległ uszkodzeniu i jego wytrzymałość wynosi: " + uczestnik.getSamochod().getWytrzymaloscSamochodu() + ".");
+        } else if (uczestnik.getKierowca().getZycieKierowcy() <= 0 && innyUczestnik.getKierowca().getZycieKierowcy() > 0
+                && uczestnik.getSamochod().getWytrzymaloscSamochodu() > 0 && innyUczestnik.getSamochod().getWytrzymaloscSamochodu() <= 0) {
+            System.out.println("Kierowca " + uczestnik.getKierowca().getTypKierowcy() + " nie wytrzymał trudów wyścigu i muszą się nim zająć służby medyczne, a jego samochód uległ uszkodzeniu i jego wytrzymałość wynosi: " + uczestnik.getSamochod().getWytrzymaloscSamochodu() +
+                    "Natomiast kierowca " + innyUczestnik.getKierowca().getTypKierowcy() + " odniósł obrażenia i teraz jego życie wynosi " + innyUczestnik.getKierowca().getZycieKierowcy() + " ,ale jego samochód " + innyUczestnik.getSamochod().getTypSamochodu() + " nadaje się już tylko na złom.");
+        } else if (uczestnik.getKierowca().getZycieKierowcy() > 0 && innyUczestnik.getKierowca().getZycieKierowcy() <= 0
+                && uczestnik.getSamochod().getWytrzymaloscSamochodu() <= 0 && innyUczestnik.getSamochod().getWytrzymaloscSamochodu() > 0) {
+            System.out.println("Kierowca " + innyUczestnik.getKierowca().getTypKierowcy() + " nie wytrzymał trudów wyścigu i muszą się nim zająć służby medyczne, a jego samochód uległ uszkodzeniu i jego wytrzymałość wynosi: " + innyUczestnik.getSamochod().getWytrzymaloscSamochodu() +
+                    "Natomiast kierowca " + uczestnik.getKierowca().getTypKierowcy() + " odniósł obrażenia i teraz jego życie wynosi " + uczestnik.getKierowca().getZycieKierowcy() + " ,ale jego samochód " + uczestnik.getSamochod().getTypSamochodu() + " nadaje się już tylko na złom.");
         }
     }
 

@@ -84,9 +84,8 @@ public class TrasaSerwis {
 
         powtarzalnoscOdcinkow(listaOdcinkow);
         sumowanieDlugosciPowtarzalnychPoziomowOdcinkow(listaOdcinkow);
-
         Trasa trasa = new Trasa(pogoda, listaOdcinkow);
-
+        //TODO: metoda znajdująca na liście pierwszy prosty i go przenieść na pierwsze miejsce
         System.out.println("Poziom trudności trasy: " + poziomTrudnosci.getNazwaPoziomuTrasy() + ", długość trasy: " + sumowanieTrasy(listaOdcinkow) + " km");
         System.out.println("Trasa składa się z odcinków:");
         System.out.println();
@@ -111,6 +110,7 @@ public class TrasaSerwis {
             }
         }
     }
+
 
     private Integer sumowanieTrasy(List<Odcinek> listaOdcinkow) {
         int suma = 0;

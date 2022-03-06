@@ -82,7 +82,6 @@ public class KierowcaSerwisTest {
 
     }
 
-//zrobić losowe tworzenie kierowcy, losowe tworzenie samochodu i przetestować to/ ewentualnie test dla samochodu bez losowania
 
     @Test
     public void powinnoStworzycSamochod() {
