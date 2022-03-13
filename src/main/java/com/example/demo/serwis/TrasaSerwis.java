@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ListIterator;
 
 @Service
 
@@ -82,10 +83,9 @@ public class TrasaSerwis {
             }
         }
 
-        powtarzalnoscOdcinkow(listaOdcinkow);
-        sumowanieDlugosciPowtarzalnychPoziomowOdcinkow(listaOdcinkow);
-        Trasa trasa = new Trasa(pogoda, listaOdcinkow);
-        //TODO: metoda znajdująca na liście pierwszy prosty i go przenieść na pierwsze miejsce
+        List<Odcinek> listaZpierwszymProstym = przygotowanieListyOdcinkowZPierwszymProstym(listaOdcinkow);
+        Trasa trasa = new Trasa(pogoda, listaZpierwszymProstym);
+
         System.out.println("Poziom trudności trasy: " + poziomTrudnosci.getNazwaPoziomuTrasy() + ", długość trasy: " + sumowanieTrasy(listaOdcinkow) + " km");
         System.out.println("Trasa składa się z odcinków:");
         System.out.println();
@@ -95,6 +95,21 @@ public class TrasaSerwis {
         System.out.println();
         return trasa;
     }
+
+    private List<Odcinek> przygotowanieListyOdcinkowZPierwszymProstym(List<Odcinek> listaOdcinkow) {
+        Odcinek odcinek1prosty = listaOdcinkow.get(0);
+        listaOdcinkow.remove(odcinek1prosty);
+        powtarzalnoscOdcinkow(listaOdcinkow);
+        List<Odcinek> nowaListaOdcinkow = new ArrayList<>();
+        nowaListaOdcinkow.add(odcinek1prosty);
+        nowaListaOdcinkow.addAll(listaOdcinkow);
+        sumowanieDlugosciPowtarzalnychPoziomowOdcinkow(nowaListaOdcinkow);
+
+        return nowaListaOdcinkow;
+    }
+
+
+
 
     private void powtarzalnoscOdcinkow(List<Odcinek> listaOdcinkow) {
         Integer licznikOdcinkow = 1;

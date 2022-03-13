@@ -113,7 +113,7 @@ public class Zadania {
         // w przypadku kiedy nazwisko ma więcej niż 6 znaków. Wypisz na tym etapie. Potem zmień dla wszystkich wielkość liter
         // na WIELKIE LITERY. Wypisz listę i przy każdej osobie zrób liczbę porządkową: 1. Ala Nowak 2. Ktoś tam itd.
 
-/*        List<String> listaImionNazwisk = new ArrayList<String>();
+        List<String> listaImionNazwisk = new ArrayList<String>();
 
         listaImionNazwisk.add("Mateusz Baranowski");
         listaImionNazwisk.add("Aleksandra Szulc");
@@ -164,7 +164,7 @@ public class Zadania {
         }
               {
 
-        }*/
+        }
 
 
 

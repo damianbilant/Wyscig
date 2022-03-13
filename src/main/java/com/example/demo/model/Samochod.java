@@ -24,7 +24,7 @@ public abstract class Samochod {
     private Integer licznikWzrostuPredkosci = 0;
     private Integer licznikSpadkuPredkosci = 0;
 
-    //TODO:użyć
+
     public Integer getLicznikWzrostuPredkosci() {
         return licznikWzrostuPredkosci;
     }
@@ -170,25 +170,25 @@ public abstract class Samochod {
     }
 
     public void limitZmianyPredkosciIzmianaPredkosci(Integer nowaszybkosc, TypOdcinka obecnyTypOdcinka, Kierowca kierowca) {
-        if (licznikWzrostuPredkosci == 0 || licznikWzrostuPredkosci == 1) {
+        if (getLicznikWzrostuPredkosci() == 0 || getLicznikWzrostuPredkosci() == 1) {
             if (getSzybkosc() < nowaszybkosc) {
-                licznikWzrostuPredkosci += 1;
+                setLicznikWzrostuPredkosci(getLicznikWzrostuPredkosci()+1);
                 setSzybkosc(nowaszybkosc);
                 System.out.println("Na odcinku " + obecnyTypOdcinka + " kierowca " + kierowca.getTypKierowcy() + " jadący "
                         + getTypSamochodu() + " przyspieszył do " + nowaszybkosc + " km/h");
-                if (licznikSpadkuPredkosci > 0) {
-                    licznikSpadkuPredkosci -= 1;
+                if (getLicznikSpadkuPredkosci() > 0) {
+                    setLicznikSpadkuPredkosci(getLicznikSpadkuPredkosci()-1);
                 }
             }
         }
-        if (licznikSpadkuPredkosci == 0 || licznikSpadkuPredkosci == 1) {
+        if (getLicznikSpadkuPredkosci()== 0 || getLicznikSpadkuPredkosci() == 1) {
             if (getSzybkosc() > nowaszybkosc) {
-                licznikSpadkuPredkosci += 1;
+                setLicznikSpadkuPredkosci(getLicznikSpadkuPredkosci()+1);
                 setSzybkosc(nowaszybkosc);
                 System.out.println("Na odcinku " + obecnyTypOdcinka + " kierowca " + kierowca.getTypKierowcy() + " jadący "
                         + getTypSamochodu() + " zwolnil do " + nowaszybkosc + " km/h");
-                if (licznikWzrostuPredkosci > 0) {
-                    licznikWzrostuPredkosci -= 1;
+                if (getLicznikWzrostuPredkosci() > 0) {
+                    setLicznikWzrostuPredkosci(getLicznikWzrostuPredkosci()-1);
                 }
             }
         }

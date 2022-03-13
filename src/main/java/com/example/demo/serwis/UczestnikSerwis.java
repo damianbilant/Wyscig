@@ -42,7 +42,7 @@ public class UczestnikSerwis {
     }
 
     public void wypisanieUczestnikow(List<Uczestnik> listaUczestnikow) {
-        System.out.println("Uczesnikami wyścigu są:");
+        System.out.println("Uczestnikami wyścigu są:");
         for (Uczestnik uczestnicy :
                 listaUczestnikow) {
             System.out.println(uczestnicy.getKierowca().getTypKierowcy() + " " + uczestnicy.getSamochod().getTypSamochodu());

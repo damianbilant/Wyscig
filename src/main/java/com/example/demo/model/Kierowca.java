@@ -83,7 +83,7 @@ public abstract class Kierowca {
         }
         return trzezwosc;
     }
-    //TODO:
+
     public void aktualizacjaReakcjiOdPogody( Pogoda pogoda) {
         Integer zmianaSzybkosciReakcji = getSzybkoscReakcji() + pogoda.getZmianaSzybkosciReakcjiKierowcy();
         setSzybkoscReakcji(zmianaSzybkosciReakcji);
@@ -98,7 +98,7 @@ public abstract class Kierowca {
         Integer zmniejszeniePunktowZycia = getZycieKierowcy() - punktyZyciaDoZmniejszenia;
         setZycieKierowcy(zmniejszeniePunktowZycia);
     }
-    //TODO: MICHAŁ
+
     public void znajomoscTrasyPredkosc (Samochod samochod){
         if(getZnajomoscTrasy() >= 9){
             samochod.setSzybkosc(samochod.getSzybkosc() + 15);
