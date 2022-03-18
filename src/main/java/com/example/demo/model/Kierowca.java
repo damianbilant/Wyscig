@@ -93,12 +93,13 @@ public abstract class Kierowca {
         System.out.println("Ze względu na pogodę reakcja kierowcy " + getTypKierowcy() + " to: " + getSzybkoscReakcji());
     }
 
-    public void aktualizacjaZycia (int minZycieKierowca, int maxZycieKierowca) {
+    public int aktualizacjaZycia (int minZycieKierowca, int maxZycieKierowca) {
         Integer punktyZyciaDoZmniejszenia = Utils.losuj(minZycieKierowca, maxZycieKierowca);
         Integer zmniejszeniePunktowZycia = getZycieKierowcy() - punktyZyciaDoZmniejszenia;
-        setZycieKierowcy(zmniejszeniePunktowZycia);
-    }
 
+        setZycieKierowcy(zmniejszeniePunktowZycia);
+        return punktyZyciaDoZmniejszenia;
+    }
     public void znajomoscTrasyPredkosc (Samochod samochod){
         if(getZnajomoscTrasy() >= 9){
             samochod.setSzybkosc(samochod.getSzybkosc() + 15);

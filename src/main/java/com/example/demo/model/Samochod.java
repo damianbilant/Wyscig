@@ -128,11 +128,11 @@ public abstract class Samochod {
 
     }
 
-    public void aktualizacjaWytrzymalosci(int minWytrzymaloscSamochodu, int maxWytrzymaloscSamochodu) {
+    public int aktualizacjaWytrzymalosci(int minWytrzymaloscSamochodu, int maxWytrzymaloscSamochodu) {
         Integer zmniejszeniePunktowWytrzymalosciSamochodu = Utils.losuj(minWytrzymaloscSamochodu, maxWytrzymaloscSamochodu);
         Integer zmniejszenieWytrzymalosciSamochodu = getWytrzymaloscSamochodu() - zmniejszeniePunktowWytrzymalosciSamochodu;
-        setWytrzymaloscSamochodu(zmniejszenieWytrzymalosciSamochodu);
-
+            setWytrzymaloscSamochodu(zmniejszenieWytrzymalosciSamochodu);
+        return zmniejszeniePunktowWytrzymalosciSamochodu;
     }
 
     //zrobić po przecinku jedno miejsce
