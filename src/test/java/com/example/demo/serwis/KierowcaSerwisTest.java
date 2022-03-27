@@ -82,20 +82,18 @@ public class KierowcaSerwisTest {
 
     }
 
+//TODO:wrzucić do samochódserwis test, powinno wylosować i stworzyć kierowcę test metoda,
+// zrobić pogoda serwis test: chcemy sprawdzić czy jest możliwa każda pogoda do stworzenia po losowaniu,
+// uczestnik serwis test: czy się tworzy uczestnik (może mock?) można zrobić zamiast scannera losowanie ilości uczestników i otestować,
+//  która ma podane w argumencie ilość uczestników i teraz w zależnośći od tego czy przychodzi null to ma się wylosować ilość uczestników
+//  a jak przychodzi jakaś wartość uczestników to ma się tyle stworzyć, a jak dam więcej lub mniej niż można to też coś ma się zrobić,
+//  trasa serwis test czy się robić wszystko odcinki, czy wszystkie poziomy trudności się tworzą, czy odcinków jest tyle ile mamy w poziomie trudności zakodowane,
+//  czy tyle sie tworzy tych odcinków, czy odcinki się nie powtarzają jeden za drugim i czy pierwszy odcinek jest prosty
 
-    @Test
-    public void powinnoStworzycSamochod() {
-        //given
-        SamochodSerwis samochodSerwis = new SamochodSerwis();
-        TypSamochodu typSamochodu = TypSamochodu.COUPE;
-        //when
-        Samochod samochod = samochodSerwis.stworzSamochod(typSamochodu);
-        //then
-        Assert.assertNotNull(samochod);
-        Assert.assertEquals(TypSamochodu.COUPE, samochod.getTypSamochodu());
-        Assert.assertNotNull(samochod.getCzasPrzejazdu());
 
-    }
+
+
+
 
     @Test
     public  void powinnoWylosowacIstworzycKierowce(){
