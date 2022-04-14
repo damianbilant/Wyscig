@@ -15,9 +15,6 @@ public class SamochodSerwisTest {
     //TODO:wrzucić do samochódserwis test, powinno wylosować i stworzyć samochód test metoda,
 
 
-    // trasa serwis test czy się robić wszystko odcinki, czy wszystkie poziomy trudności się tworzą, czy odcinków jest tyle ile mamy w poziomie trudności zakodowane,
-    // czy tyle sie tworzy tych odcinków, czy odcinki się nie powtarzają jeden za drugim i czy pierwszy odcinek jest prosty
-
     @Test
     public void powinnoStworzycSamochod() {
         //given

@@ -4,5 +4,6 @@ public enum TypOdcinka {
     PODJAZD,
     PROSTY,
     ZAKRET,
-    ZJAZD
+    ZJAZD,
+    PITSTOP
 }

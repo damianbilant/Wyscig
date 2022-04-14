@@ -23,7 +23,7 @@ public class WyscigSerwis {
         uczestnikSerwis.wypisanieUczestnikow(uczestnikList);
 
         wyscig(uczestnikList, trasa);
-
+        //wylosujIloscPitstopow(pogoda,trasa,trasaSerwis.wylosujPoziomTrudnosci());
     }
 
     public void wyscig(List<Uczestnik> listaUczestnikow, Trasa trasa) {
@@ -47,40 +47,40 @@ public class WyscigSerwis {
             obslugaPojedynczegoOdcinka(null, trasa.getListaOdcinkow().get(0), uczestnik.getSamochod(), uczestnik.getKierowca(), listaUczestnikow); //start
 
         }
-            for (int i = 0; i < trasa.getListaOdcinkow().size(); i++) {
-                Integer nrOdcinka = i + 1;
+        for (int i = 0; i < trasa.getListaOdcinkow().size(); i++) {
+            Integer nrOdcinka = i + 1;
+            System.out.println();
+            System.out.println("Przejazd odcinka nr " + nrOdcinka + " z " + trasa.getListaOdcinkow().size() + " (" + trasa.getListaOdcinkow().get(i).getNazwaOdcinka() + ")");
+
+            Odcinek obecnyOdcinek = trasa.getListaOdcinkow().get(i);
+
+            for (Uczestnik uczestnik : listaUczestnikow) {
                 System.out.println();
-                System.out.println("Przejazd odcinka nr " + nrOdcinka + " z " + trasa.getListaOdcinkow().size() + " (" + trasa.getListaOdcinkow().get(i).getNazwaOdcinka() + ")");
-
-                Odcinek obecnyOdcinek = trasa.getListaOdcinkow().get(i);
-
-                for (Uczestnik uczestnik : listaUczestnikow) {
-                    System.out.println();
-                    try {
-                        Odcinek nastepnyOdcinek = trasa.getListaOdcinkow().get(i + 1);
-                        obslugaPojedynczegoOdcinka(obecnyOdcinek, nastepnyOdcinek, uczestnik.getSamochod(), uczestnik.getKierowca(), listaUczestnikow);
-                        if(listaUczestnikow.size() < 1){
-                            break;
-                        }
-                    } catch (Exception e) {
-                        obslugaPojedynczegoOdcinka(obecnyOdcinek, null, uczestnik.getSamochod(), uczestnik.getKierowca(), listaUczestnikow);
-                        if(listaUczestnikow.size() < 1){
-                            break;
-                        }
+                try {
+                    Odcinek nastepnyOdcinek = trasa.getListaOdcinkow().get(i + 1);
+                    obslugaPojedynczegoOdcinka(obecnyOdcinek, nastepnyOdcinek, uczestnik.getSamochod(), uczestnik.getKierowca(), listaUczestnikow);
+                    if (listaUczestnikow.size() < 1) {
+                        break;
+                    }
+                } catch (Exception e) {
+                    obslugaPojedynczegoOdcinka(obecnyOdcinek, null, uczestnik.getSamochod(), uczestnik.getKierowca(), listaUczestnikow);
+                    if (listaUczestnikow.size() < 1) {
+                        break;
                     }
                 }
-                starcie(listaUczestnikow, obecnyOdcinek);
-                if(listaUczestnikow.size() < 1){
-                    System.out.println();
-                    System.out.println("Wyścig został zakończony - nikt nie dojechał do mety.");
-                    break;
-                }
-                System.out.println();
-                System.out.println("Tabela wyników:");
-                utworzenieTabeliWynikow(listaUczestnikow);
-
             }
+            starcie(listaUczestnikow, obecnyOdcinek);
+            if (listaUczestnikow.size() < 1) {
+                System.out.println();
+                System.out.println("Wyścig został zakończony - nikt nie dojechał do mety.");
+                break;
+            }
+            System.out.println();
+            System.out.println("Tabela wyników:");
+            utworzenieTabeliWynikow(listaUczestnikow);
+
         }
+    }
 
 
     private void obslugaPojedynczegoOdcinka(Odcinek obecnyOdcinek, Odcinek nastepnyOdcinek, Samochod samochod, Kierowca kierowca, List<Uczestnik> listaUczestnikow) {
@@ -116,14 +116,14 @@ public class WyscigSerwis {
         }
         //meta - ostatni odcinek
         if (nastepnyOdcinek == null) {
-            System.out.println("Już widać metę! Jeszcze tylko jeden odcinek pozostal " + kierowca.getTypKierowcy() + " do pokonania");
+            System.out.println("Już widać metę! Jeszcze tylko jeden odcinek pozostał " + kierowca.getTypKierowcy() + " do pokonania");
             przejazd(obecnyOdcinek, kierowca, samochod, listaUczestnikow);
             //usuwanie i if z 51 ???
             usuwanieUczestnikaLubSamochodu(listaUczestnikow);
             if (listaUczestnikow.isEmpty()) {
                 System.out.println("Wyścig zostaje zakończony, ponieważ żaden z uczestników nie jest w stanie go dokończyć. Zobaczmy na końcową tabelę wyników:");
                 utworzenieTabeliWynikow(listaUczestnikow);
-            }  else {
+            } else {
                 samochod.dodajCzasPrzejazduOdcinka(samochod.szybkoscPrzejazduOdcinka(obecnyOdcinek));
                 samochod.dodajPrzejechanyDystans(obecnyOdcinek);
                 System.out.println("Kierowca " + kierowca.getTypKierowcy() + " przejechał odcinek " + obecnyOdcinek.getNazwaOdcinka() +
@@ -238,9 +238,9 @@ public class WyscigSerwis {
         }
         if (obecnyOdcinek == TypOdcinka.PODJAZD) {
             obecnyPodjazd(nastepnyOdcinek, samochod, kierowca, listaUczestnikow);
-        } else if (obecnyOdcinek == null) {
+        } /*else if (obecnyOdcinek == null) {
             // TODO:wyjątek
-        }
+        }*/
     }
 
     private void obecnyProsty(Odcinek nastepnyOdcinek, Samochod samochod, Kierowca kierowca, List<Uczestnik> listaUczestnikow) {
@@ -688,9 +688,9 @@ public class WyscigSerwis {
             if (kierowca.getZycieKierowcy() > 0) {
 
                 System.out.println("Kierowca " + kierowca.getTypKierowcy() + " jadący samochodem " + samochod.getTypSamochodu() + " pokonując odcinek " +
-                            obecnyOdcinek + " nie dostosował swoich umiejętności i prędkości samochodu do zbliżającego się odcinka " + nastepnyOdcinek +
-                            " w wyniku czego odniósł obrażenia. Teraz jego życie wynosi " + kierowca.getZycieKierowcy() +
-                            ", natomiast samochód nie uległ uszkodzeniu.");
+                        obecnyOdcinek + " nie dostosował swoich umiejętności i prędkości samochodu do zbliżającego się odcinka " + nastepnyOdcinek +
+                        " w wyniku czego odniósł obrażenia. Teraz jego życie wynosi " + kierowca.getZycieKierowcy() +
+                        ", natomiast samochód nie uległ uszkodzeniu.");
 
             } else if (kierowca.getZycieKierowcy() <= 0) {
 
@@ -720,25 +720,25 @@ public class WyscigSerwis {
     }
 
 
-//robi każdy z każdym i odwrotnie jeszcze raz to samo
-
     public void starcie(List<Uczestnik> listaUczestnikow, Odcinek odcinek) {
         if (Utils.losuj(1, 4) == 1) {
+            int pominDublaIndex = 0;
             for (Uczestnik uczestnik :
                     listaUczestnikow) {
-                for (Uczestnik zawodnik :
-                        listaUczestnikow) {
-                    if (!uczestnik.equals(zawodnik)) {
-                        aktualizacjaKierowcaSamochodStarcie(uczestnik, zawodnik, odcinek, listaUczestnikow);
-                        System.out.println(uczestnik.getKierowca().getTypKierowcy() + " " + uczestnik.getSamochod().getTypSamochodu() + "  z  " + zawodnik.getKierowca().getTypKierowcy() + " " + zawodnik.getSamochod().getTypSamochodu());
+                pominDublaIndex += 1;
+                for (int i = pominDublaIndex; i < listaUczestnikow.size(); i++) {
+                    if (!uczestnik.equals(listaUczestnikow.get(i))) {
+                        aktualizacjaKierowcaSamochodStarcie(uczestnik, listaUczestnikow.get(i), odcinek, listaUczestnikow);
+                        System.out.println(uczestnik.getKierowca().getTypKierowcy() + " " + uczestnik.getSamochod().getTypSamochodu() + "  z  " + listaUczestnikow.get(i).getKierowca().getTypKierowcy() + " " + listaUczestnikow.get(i).getSamochod().getTypSamochodu());
 
                     }
 
                 }
             }
-            usuwanieUczestnikaLubSamochodu(listaUczestnikow);
         }
+        usuwanieUczestnikaLubSamochodu(listaUczestnikow);
     }
+
 
     private void skutkiStarcia(Uczestnik uczestnik, Uczestnik innyUczestnik, List<Uczestnik> listaUczestnikow) {
         if (uczestnik.getKierowca().getZycieKierowcy() > 0 && innyUczestnik.getKierowca().getZycieKierowcy() > 0
@@ -865,35 +865,36 @@ public class WyscigSerwis {
             }
         }
     }
+
     public List<Wyniki> utworzenieTabeliWynikow(List<Uczestnik> listaUczestnikow) {
 
         List<Wyniki> listaWynikow = new ArrayList<>();
 
-/*        for (int i = 0; i < listaUczestnikow.size(); i++) {
+        for (int i = 0; i < listaUczestnikow.size(); i++) {
             Wyniki wyniki = new Wyniki(listaUczestnikow.get(i), listaUczestnikow.get(i).getSamochod().getCzasPrzejazdu());
             listaWynikow.add(wyniki);
         }
         Double najwiekszaLiczba = 0.0;
         Double najmniejszaLiczba = 0.0;
-        for (int i = 0; i < listaWynikow.size(); i++){
-
-                try {
-                    Double wiekszaLiczba = Math.max(listaWynikow.get(i).getCzasPrzejazduUczestnika(),listaWynikow.get(i+1).getCzasPrzejazduUczestnika());
-                    if (wiekszaLiczba > najwiekszaLiczba) {
-                        najwiekszaLiczba = wiekszaLiczba;
-
-                    }
-
-                } catch (IndexOutOfBoundsException e) {
-                    //System.out.println("Wyłapał błąd");
-                }
-            }
-
-       List<Wyniki> posortowanaLista = new ArrayList<>();
         for (int i = 0; i < listaWynikow.size(); i++) {
 
             try {
-                Double mniejszaLiczba = Math.min(listaWynikow.get(i).getCzasPrzejazduUczestnika(),listaWynikow.get(i+1).getCzasPrzejazduUczestnika());
+                Double wiekszaLiczba = Math.max(listaWynikow.get(i).getCzasPrzejazduUczestnika(), listaWynikow.get(i + 1).getCzasPrzejazduUczestnika());
+                if (wiekszaLiczba > najwiekszaLiczba) {
+                    najwiekszaLiczba = wiekszaLiczba;
+
+                }
+
+            } catch (IndexOutOfBoundsException e) {
+                //System.out.println("Wyłapał błąd");
+            }
+        }
+
+        List<Wyniki> posortowanaLista = new ArrayList<>();
+        for (int i = 0; i < listaWynikow.size(); i++) {
+
+            try {
+                Double mniejszaLiczba = Math.min(listaWynikow.get(i).getCzasPrzejazduUczestnika(), listaWynikow.get(i + 1).getCzasPrzejazduUczestnika());
                 if (mniejszaLiczba < najwiekszaLiczba) {
                     najmniejszaLiczba = mniejszaLiczba;
 
@@ -903,11 +904,11 @@ public class WyscigSerwis {
                 //System.out.println("Wyłapał błąd");
             }
 
-        }*/
+        }
         Map<Uczestnik, Double> listaCzasuPrzejazdu = new HashMap<>();
         for (int i = 0; i < listaUczestnikow.size(); i++) {
             for (Uczestnik zawodnik : listaUczestnikow) {
-                listaCzasuPrzejazdu.put(zawodnik, zawodnik.getSamochod().getCzasPrzejazdu());
+                listaCzasuPrzejazdu.put(zawodnik, zawodnik.getSamochod().czasPrzejazduTotal());
             }
         }
 
@@ -928,10 +929,69 @@ public class WyscigSerwis {
             System.out.println(wyniki.getUczestnik() + " " + wyniki.getCzasPrzejazduUczestnika());
         }
     }*/
+//TODO:do pitstop serwis przerzucić
+    public Integer wylosujIloscPitstopow(Pogoda pogoda, Trasa trasa, TrasaLevel trasaLevel) {
+        int iloscPitstopow = 0;
+        if (trasa.getPogoda() == Pogoda.SUNNY) {
+            if (trasaLevel == TrasaLevel.EASY) {
+                iloscPitstopow = Utils.losuj(0, 1);
+            } else if (trasaLevel == TrasaLevel.MEDIUM) {
+                iloscPitstopow = Utils.losuj(1, 2);
+            } else if (trasaLevel == TrasaLevel.HARD) {
+                iloscPitstopow = Utils.losuj(1, 3);
+            }
+            if (iloscPitstopow > 0) {
+                System.out.println("Pogoda " + pogoda.getNazwaPogody() + ", możliwa ilość pitstopów: " + iloscPitstopow + ".");
+            }
+        } else if (trasa.getPogoda() == Pogoda.CLOUDY) {
+            if (trasaLevel == TrasaLevel.EASY) {
+                iloscPitstopow = Utils.losuj(1, 2);
+            } else if (trasaLevel == TrasaLevel.MEDIUM) {
+                iloscPitstopow = Utils.losuj(1, 3);
+            } else if (trasaLevel == TrasaLevel.HARD) {
+                iloscPitstopow = Utils.losuj(2, 3);
+            }
+            System.out.println("Pogoda " + pogoda.getNazwaPogody() + ", możliwa ilość pitstopów: " + iloscPitstopow + ".");
+        } else if (trasa.getPogoda() == Pogoda.RAINY) {
+            if (trasaLevel == TrasaLevel.EASY) {
+                iloscPitstopow = Utils.losuj(1, 3);
+            } else if (trasaLevel == TrasaLevel.MEDIUM) {
+                iloscPitstopow = Utils.losuj(2, 3);
+            } else if (trasaLevel == TrasaLevel.HARD) {
+                iloscPitstopow = Utils.losuj(2, 4);
+            }
+            System.out.println("Pogoda " + pogoda.getNazwaPogody() + ", możliwa ilość pitstopów: " + iloscPitstopow + ".");
+        } else if (trasa.getPogoda() == Pogoda.SNOWY) {
+            if (trasaLevel == TrasaLevel.EASY) {
+                iloscPitstopow = Utils.losuj(2, 3);
+            } else if (trasaLevel == TrasaLevel.MEDIUM) {
+                iloscPitstopow = Utils.losuj(2, 4);
+            } else if (trasaLevel == TrasaLevel.HARD) {
+                iloscPitstopow = Utils.losuj(3, 4);
+            }
+            System.out.println("Pogoda " + pogoda.getNazwaPogody() + ", możliwa ilość pitstopów: " + iloscPitstopow + ".");
+        }
+        return iloscPitstopow;
+
+    }
+
+    //TODO: dodać losowanie ilości paliwa?? i na pitstopie możliwość dotankowania??
+    // czy pijany po pitstopie??
+    // dodanie życia i wytrzymałości samochodu dzięki zjechaniu do pitstopu
+    // może zmiana opon w pitstopie jak deszcz np i dodanie przez to do prędkości ale strata czasowa za zjechanie do pitstopu??
+    // stworzyc ten odcinek pitstop !! obiekt
+
+
+    public void aktualizacjaKierowcaSamochodPitstop(){
+
+    }
+
+/*    public void pitstop(Pogoda pogoda, Trasa trasa, TrasaSerwis trasaSerwis, Samochod samochod) {
+        wylosujIloscPitstopow(pogoda, trasa, trasaSerwis.wylosujPoziomTrudnosci());
+        samochod.zmianaPredkosciOdcinekPitstop(trasaSerwis.stworzOdcinek(TypOdcinka.PITSTOP));
+    }*/
+
 
 }
 
 
-//coś dalej z usunięciem uczestnika po starciu jest nie tak, druga kwestia wtedy mieliśmy innyUczestnik też a teraz przekazujemy tylko
-// listaUczestnikow do metody usunięcia.
-// Poprawić souty w skutkach starcia bo wyświetla się chyba jak jest na minusie ostatni wpis że kaput ale z życiem na -.

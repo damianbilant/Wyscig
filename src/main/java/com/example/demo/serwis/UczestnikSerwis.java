@@ -46,7 +46,7 @@ public class UczestnikSerwis {
         return listaUczestnikow;
     }
 
-    public List<Uczestnik> losowoStworzIloscUczestnikow(KierowcaSerwis kierowcaSerwis, SamochodSerwis samochodSerwis){
+    private List<Uczestnik> losowoStworzIloscUczestnikow(KierowcaSerwis kierowcaSerwis, SamochodSerwis samochodSerwis){
         List<Uczestnik> listaUczestnikow = new ArrayList<>();
         int liczbaUczestnikow = Utils.losuj(2,6);
         for (int i = 0; i < liczbaUczestnikow; i++) {
@@ -59,8 +59,7 @@ public class UczestnikSerwis {
 
     public void wypisanieUczestnikow(List<Uczestnik> listaUczestnikow) {
         System.out.println("Uczestnikami wyścigu są:");
-        for (Uczestnik uczestnicy :
-                listaUczestnikow) {
+        for (Uczestnik uczestnicy : listaUczestnikow) {
             System.out.println(uczestnicy.getKierowca().getTypKierowcy() + " " + uczestnicy.getSamochod().getTypSamochodu());
 
         }

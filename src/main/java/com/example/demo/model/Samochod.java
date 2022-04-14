@@ -102,8 +102,6 @@ public abstract class Samochod {
 
 
     private void aktualizacjaSzybkosciOdPogody(Pogoda pogoda) {
-        pogoda.getZmianaSzybkosciSamochod();
-        getSzybkosc();
         Integer zmianaSzybkosci = getSzybkosc() + pogoda.getZmianaSzybkosciSamochod();
         setSzybkosc(zmianaSzybkosci);
         System.out.println("Ze względu na pogodę szybkość samochodu " + getTypSamochodu() + " to: " + zmianaSzybkosci);
@@ -112,8 +110,6 @@ public abstract class Samochod {
 
 
     private void aktualizacjaHamowaniaOdPogody(Pogoda pogoda) {
-        pogoda.getZmianaHamowaniaSamochod();
-        getDrogaHamowania();
         Integer zmianaHamowania = getDrogaHamowania() + pogoda.getZmianaHamowaniaSamochod();
         setDrogaHamowania(zmianaHamowania);
         if (getDrogaHamowania() < 30) {
@@ -135,7 +131,6 @@ public abstract class Samochod {
         return zmniejszeniePunktowWytrzymalosciSamochodu;
     }
 
-    //zrobić po przecinku jedno miejsce
     public Double szybkoscPrzejazduOdcinka(Odcinek odcinek) {
         double s = Double.valueOf(odcinek.getDlugoscOdcinka());
         double v = Double.valueOf(getSzybkosc());
@@ -146,12 +141,19 @@ public abstract class Samochod {
         return czasPrzejazduOdcinka;
     }
 
+    public Double czasPrzejazduTotal(){
+        double totalCzasPrzejazdu = getCzasPrzejazdu();
+        totalCzasPrzejazdu *= 10;
+        totalCzasPrzejazdu = Math.round(totalCzasPrzejazdu);
+        totalCzasPrzejazdu /= 10;
 
+        return totalCzasPrzejazdu;
+    }
 
     public void dodajCzasPrzejazduOdcinka(Double czasPrzejazduOdcinka) {
         czasPrzejazdu += czasPrzejazduOdcinka;
         //czasPrzejazdu = czasPrzejazduOdcinka + czasPrzejazdu;
-        System.out.println("Czas total " + getCzasPrzejazdu());
+        System.out.println("Czas total " + czasPrzejazduTotal());
         System.out.println("Czas odcinka " + czasPrzejazduOdcinka);
     }
 
@@ -181,7 +183,7 @@ public abstract class Samochod {
                 }
             }
         }
-        if (getLicznikSpadkuPredkosci()== 0 || getLicznikSpadkuPredkosci() == 1) {
+        if (getLicznikSpadkuPredkosci() == 0 || getLicznikSpadkuPredkosci() == 1) {
             if (getSzybkosc() > nowaszybkosc) {
                 setLicznikSpadkuPredkosci(getLicznikSpadkuPredkosci()+1);
                 setSzybkosc(nowaszybkosc);
@@ -195,7 +197,8 @@ public abstract class Samochod {
     }
 
 
-    @Override
+
+  @Override
     public String toString() {
         return "typ samochodu : " + getTypSamochodu() + ", ciężar samochodu : " + getCiezar() + " kg" + ", skuteczność hamowania samochodu : " + getSkutecznoscHamowania() + ", szybkość max samochodu : " + getSzybkosc() + " km/h";
     }
