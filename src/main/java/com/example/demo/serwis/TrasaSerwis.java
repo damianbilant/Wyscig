@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.ListIterator;
 
 @Service
 
@@ -82,14 +81,15 @@ public class TrasaSerwis {
                 listaOdcinkow.add(odcinek);
             }
         }
-
+//TODO: od 85 do 87 dać do bloku try catch i zrobić exception
         List<Odcinek> listaZpierwszymProstym = przygotowanieListyOdcinkowZPierwszymProstym(listaOdcinkow);
+        //dodać do tej listy pitstopy przed stworzeniem trasy i nową listę przekazać do trasy
         Trasa trasa = new Trasa(pogoda, listaZpierwszymProstym);
 
         System.out.println("Poziom trudności trasy: " + poziomTrudnosci.getNazwaPoziomuTrasy() + ", długość trasy: " + sumowanieTrasy(listaOdcinkow) + " km");
         System.out.println("Trasa składa się z odcinków:");
         System.out.println();
-        for (Odcinek odcinek : listaOdcinkow) {
+        for (Odcinek odcinek : listaZpierwszymProstym) {
             System.out.println(odcinek.getNazwaOdcinka() + ", długość " + odcinek.getDlugoscOdcinka() + " km, " + "poziom trudności " + odcinek.getTrudnoscOdcinka());
         }
         System.out.println();
@@ -107,8 +107,6 @@ public class TrasaSerwis {
 
         return nowaListaOdcinkow;
     }
-
-
 
 
     private void powtarzalnoscOdcinkow(List<Odcinek> listaOdcinkow) {
@@ -142,9 +140,6 @@ public class TrasaSerwis {
                     int dlugoscOdcinka1 = listaOdcinkow.get(i).getDlugoscOdcinka();
                     int dlugoscOdcinka2 = listaOdcinkow.get(i - 1).getDlugoscOdcinka();
                     int suma = dlugoscOdcinka2 + dlugoscOdcinka1;
-               /* System.out.println("zsumowało!!!!!!!!!!!!!!!!!!");
-                System.out.println(dlugoscOdcinka1 + " długość 1 " + dlugoscOdcinka2 + " długość 2 " + listaOdcinkow.get(i).getTrudnoscOdcinka() +
-                        " poziom1 " + listaOdcinkow.get(i-1).getTrudnoscOdcinka() + " poziom2");*/
                     listaOdcinkow.get(i - 1).setDlugoscOdcinka(suma);
                     listaOdcinkow.remove(i);
                     sumowanieDlugosciPowtarzalnychPoziomowOdcinkow(listaOdcinkow);
@@ -154,4 +149,17 @@ public class TrasaSerwis {
         }
     }
 
+    private List<Odcinek> przygotowanieListyOdcinkowZpitstopami(List<Odcinek> listaOdcinkowZpierwszymProstym) {
+        List<Odcinek> listaOdcinkowZpitstopami = null;
+        for (int i = 10; i < listaOdcinkowZpierwszymProstym.size(); i = i + 10) {
+            listaOdcinkowZpitstopami = new ArrayList<>();
+            OdcinekPitstop odcinekPitstop = new OdcinekPitstop();
+            listaOdcinkowZpitstopami.add(i,odcinekPitstop);
+
+        }
+        return listaOdcinkowZpitstopami;
+    }
+//TODO: spróbować zrobić losowanie miejsc gdzie będą pitstopy i w zależności od ilości trasy, od ilości wylosowanej liczny pitstopów
+
 }
+

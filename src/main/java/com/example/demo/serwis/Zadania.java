@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Zadania {
 
-//    TODO:
+
 //    Dodatkowe:
 //    1. Wypisz liczby od 5 do 15
 //    2. Wypisz liczby od 1 do 10, ale dla co drugiej dodaj krótki tekst "co druga liczba"
@@ -15,7 +15,7 @@ public class Zadania {
 //    4. Wypisz imiona z powyzszej listy, a jeśli imię zaczyna się od litery “A” to nie dodawaj nazwiska
 //    Oczywiscie wypisywanie wszystkiego powyzej chcialbym, zeby bylo zrobione za pomoca pętli (4 rozne pętle).
 
-//    TODO:
+
 //    Wyscig:
 //    1. Stworz uczestnikSerwis i niech tam bedzie mozliwosc tworzenia uczestnika (uczestnik tj. kierowca i jego auto).
 //    Mozesz tam zrobi, zeby sie losowo wszystko dobieralo, albo wg okreslonych typow.

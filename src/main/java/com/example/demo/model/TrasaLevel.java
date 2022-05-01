@@ -20,22 +20,27 @@ public enum TrasaLevel {
     }
 
     public Integer getIloscOdcinkowProstych() {
+
         return iloscOdcinkowProstych;
     }
 
     public Integer getIloscZakretow() {
+
         return iloscZakretow;
     }
 
     public Integer getIloscPodjazdow() {
+
         return iloscPodjazdow;
     }
 
     public Integer getIloscZjazdow() {
+
         return iloscZjazdow;
     }
 
     public String getNazwaPoziomuTrasy() {
+
         return nazwaPoziomuTrasy;
     }
 }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-//TODO: zrobić pogoda serwis test: chcemy sprawdzić czy jest możliwa każda pogoda do stworzenia po losowaniu,
+// zrobić pogoda serwis test: chcemy sprawdzić czy jest możliwa każda pogoda do stworzenia po losowaniu,
 
 @RunWith(SpringRunner.class)
 public class PogodaSerwisTest {

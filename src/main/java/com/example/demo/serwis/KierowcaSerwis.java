@@ -1,5 +1,6 @@
 package com.example.demo.serwis;
 
+import com.example.demo.exceptions.KierowcaException;
 import com.example.demo.model.*;
 import com.example.demo.utils.Utils;
 import org.springframework.stereotype.Service;
@@ -13,25 +14,29 @@ public class KierowcaSerwis {
 
     public Kierowca stworzKierowce(TypKierowcy typKierowcy) {
         Kierowca kierowca;
-        switch (typKierowcy) {
-            case UBER:
-                kierowca = new KierowcaUber();
-                break;
-            case DZIAD:
-                kierowca = new KierowcaDziad();
-                break;
-            case BOR:
-                kierowca = new KierowcaBOR();
-                break;
-            default:
-                kierowca = null;
-                break;
-        }
+        try {
+            switch (typKierowcy) {
+                case UBER:
+                    kierowca = new KierowcaUber();
+                    break;
+                case DZIAD:
+                    kierowca = new KierowcaDziad();
+                    break;
+                case BOR:
+                    kierowca = new KierowcaBOR();
+                    break;
+                default:
+                    kierowca = null;
+                    break;
+            }
 
-        kierowca.nietrzezwoscZmniejszenieReakcji();
-        kierowca.ustawienieRyzyka();
-        System.out.println("Nowy kierowca to: " + kierowca.toString());
-        return kierowca;
+            kierowca.nietrzezwoscZmniejszenieReakcji();
+            kierowca.ustawienieRyzyka();
+            System.out.println("Nowy kierowca to: " + kierowca.toString());
+            return kierowca;
+        } catch (RuntimeException exception){
+            throw new KierowcaException(typKierowcy);
+        }
     }
 
     public Kierowca losowoStworzKierowce() {
@@ -46,39 +51,6 @@ public class KierowcaSerwis {
         return kierowca;
     }
 
-/*    public Kierowca stworzKierowce2(TypKierowcy typKierowcy) {
-        int rodzajKierowcy = Utils.losuj(0,99);
-        Kierowca kierowca = null;
-
-
-            if(rodzajKierowcy<33) {
-
-                    kierowca = new KierowcaUber();
-
-
-                }
-
-
-                else if(rodzajKierowcy<66) {
-                    kierowca = new KierowcaDziad();
-
-
-                }
-
-
-                else if(rodzajKierowcy<99 && rodzajKierowcy >66) {
-                    kierowca = new KierowcaBOR();
-
-
-                }
-
-
-
-        kierowca.nietrzezwoscZmniejszenieReakcji();
-        kierowca.ustawienieRyzyka();
-        System.out.println("Nowy kierowca to: " + kierowca.toString());
-        return kierowca;
-    }*/
 }
 
 

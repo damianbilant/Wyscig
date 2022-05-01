@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 public class SamochodSerwisTest {
 
-    //TODO:wrzucić do samochódserwis test, powinno wylosować i stworzyć samochód test metoda,
+    //:wrzucić do samochódserwis test, powinno wylosować i stworzyć samochód test metoda,
 
 
     @Test
