@@ -1,8 +1,5 @@
 package com.example.demo.serwis;
 
-import com.example.demo.model.Kierowca;
-import com.example.demo.model.Samochod;
-import com.example.demo.model.TypSamochodu;
 import com.example.demo.model.Uczestnik;
 import com.example.demo.utils.Utils;
 

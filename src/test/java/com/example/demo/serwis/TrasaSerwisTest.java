@@ -9,8 +9,6 @@ import java.util.List;
 
 public class TrasaSerwisTest {
 
-    // trasa serwis test czy się robią wszystkie odcinki, czy wszystkie poziomy trudności się tworzą, czy odcinków jest tyle ile mamy w poziomie trudności zakodowane,
-    // czy tyle sie tworzy tych odcinków, czy odcinki się nie powtarzają jeden za drugim i czy pierwszy odcinek jest prosty
 
     @Test
 
@@ -21,13 +19,14 @@ public class TrasaSerwisTest {
         TrasaSerwis trasaSerwis = new TrasaSerwis();
         PogodaSerwis pogodaSerwis = new PogodaSerwis();
         Pogoda pogoda = pogodaSerwis.wylosujPogode();
+        PitstopSerwis pitstopSerwis = new PitstopSerwis();
         List<TypOdcinka> listaTypowOdcinkow = new ArrayList<>(Arrays.asList(TypOdcinka.values()));
         //TrasaLevel trasaLevel = trasaSerwis.wylosujPoziomTrudnosci();
         for (int j = 0; j < listaPoziomow.size(); j++) {
             TrasaLevel level = listaPoziomow.get(j);
 
             //when
-            Trasa trasa = trasaSerwis.stworzTrase(pogoda, level);
+            Trasa trasa = trasaSerwis.stworzTrase(pogoda, level, pitstopSerwis);
             //then
             // test1: sumowanie ilości odcinków metoda i porównać do trasa.getListaOdcinkow().size();
             //Assert.assertTrue();
@@ -35,6 +34,7 @@ public class TrasaSerwisTest {
             Assert.assertFalse(trasa.getListaOdcinkow().get(0).getTypOdcinka().equals(TypOdcinka.ZAKRET));
             Assert.assertFalse(trasa.getListaOdcinkow().get(0).getTypOdcinka().equals(TypOdcinka.PODJAZD));
             Assert.assertFalse(trasa.getListaOdcinkow().get(0).getTypOdcinka().equals(TypOdcinka.ZJAZD));
+            Assert.assertTrue(trasa.getListaOdcinkow().size() <= sumowanieOdcinkow(level,trasa));
 
             for (int i = 1; i < trasa.getListaOdcinkow().size(); i++) {
                 if (trasa.getListaOdcinkow().get(i).getTrudnoscOdcinka() == trasa.getListaOdcinkow().get(i - 1).getTrudnoscOdcinka()) {
@@ -62,14 +62,23 @@ public class TrasaSerwisTest {
         return listaPoziomowTrasy;
     }
 
-    private int sumowanieOdcinkow(TrasaLevel trasaLevel){
-        int suma = trasaLevel.getIloscOdcinkowProstych() + trasaLevel.getIloscPodjazdow() + trasaLevel.getIloscZakretow() + trasaLevel.getIloscZjazdow();
+    private int sumowanieOdcinkow(TrasaLevel trasaLevel,Trasa trasa) {
+        int suma = trasaLevel.getIloscOdcinkowProstych() + trasaLevel.getIloscPodjazdow() + trasaLevel.getIloscZakretow() + trasaLevel.getIloscZjazdow()
+                + iloscPitstopow(trasa);
+
         return suma;
+    }
+
+    private int iloscPitstopow(Trasa trasa) {
+        int licznik = 0;
+        for (int i = 0; i < trasa.getListaOdcinkow().size(); i++) {
+            if (trasa.getListaOdcinkow().get(i).getNazwaOdcinka().equals("Pitstop")) {
+                licznik += 1;
+            }
         }
+        return licznik;
 
-
+    }
 }
 
-//TODO: jak będzie zrobiony pitstop to z trasy wyciągnąć (streamem) forem ilość pitstopów i dodać do sumowania odcinków
-//TODO:test żeby w parametrze testu było easy,medium,hard i żeby test odpalił się test z każdym tym poziomem trudności i sprawdził czy jest tyle odcinków ile trzeba
-// TODO: czy pitstop się tworzy
+//TODO:czy pitstopów jest co najmniej tyle ile jest w wylosuj czy w trasie rzeczywiście tyle powstaje ile powinno

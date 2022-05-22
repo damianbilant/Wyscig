@@ -10,4 +10,7 @@ public class KierowcaException extends RuntimeException {
     }
 }
 
-//TODO: zrobić exception dla samochodu, który będzie łapany przy tworzeniu (samochód serwis)
+
+
+
+

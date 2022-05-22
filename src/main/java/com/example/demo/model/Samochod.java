@@ -45,6 +45,10 @@ public abstract class Samochod {
         return czasPrzejazdu;
     }
 
+    public void setCzasPrzejazdu(Double czasPrzejazdu) {
+        this.czasPrzejazdu = czasPrzejazdu;
+    }
+
     public Integer getPrzejechanyDystans() {
         return przejechanyDystans;
     }
@@ -92,9 +96,9 @@ public abstract class Samochod {
         return zaokraglonaSzybkosc;
     }
 
-    public Integer wyliczenieDrogiHamowania(Samochod samochod) {
+    public int wyliczenieDrogiHamowania(Samochod samochod) {
         Integer y = (samochod.getCiezar() * zamianaJednostek(samochod));
-        Integer drogaHamowania = y / samochod.getSkutecznoscHamowania();
+        int drogaHamowania = y / samochod.getSkutecznoscHamowania();
         setDrogaHamowania(drogaHamowania);
         System.out.println("Droga hamowania samochodu to: " + drogaHamowania);
         return drogaHamowania;
@@ -131,7 +135,7 @@ public abstract class Samochod {
         return zmniejszeniePunktowWytrzymalosciSamochodu;
     }
 
-    public Double szybkoscPrzejazduOdcinka(Odcinek odcinek) {
+    public double szybkoscPrzejazduOdcinka(Odcinek odcinek) {
         double s = Double.valueOf(odcinek.getDlugoscOdcinka());
         double v = Double.valueOf(getSzybkosc());
         double czasPrzejazduOdcinka = (s / v)* 60;
@@ -141,7 +145,7 @@ public abstract class Samochod {
         return czasPrzejazduOdcinka;
     }
 
-    public Double czasPrzejazduTotal(){
+    public double czasPrzejazduTotal(){
         double totalCzasPrzejazdu = getCzasPrzejazdu();
         totalCzasPrzejazdu *= 10;
         totalCzasPrzejazdu = Math.round(totalCzasPrzejazdu);
@@ -194,6 +198,16 @@ public abstract class Samochod {
                 }
             }
         }
+    }
+
+    public int aktualizacjaWytrzymalosciPitstop(Samochod samochod, Kierowca kierowca) {
+        int zwiekszenieWytrzymalosciSamochodu = samochod.getWytrzymaloscSamochodu() + 10;
+        setWytrzymaloscSamochodu(zwiekszenieWytrzymalosciSamochodu);
+        System.out.println("Dzięki zjechaniu do pitstopu samochód uczestnika " + kierowca.getTypKierowcy() + " zyskuje 10 punktów wytrzymałości " +
+                "i teraz jego wytrzymałość wynosi: " + samochod.getWytrzymaloscSamochodu() +".");
+
+
+        return zwiekszenieWytrzymalosciSamochodu;
     }
 
 

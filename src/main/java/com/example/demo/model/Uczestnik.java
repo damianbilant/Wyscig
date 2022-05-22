@@ -11,10 +11,12 @@ public class Uczestnik {
     }
 
     public Kierowca getKierowca() {
+
         return kierowca;
     }
 
     public Samochod getSamochod() {
+
         return samochod;
     }
 }

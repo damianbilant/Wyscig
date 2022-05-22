@@ -1,5 +1,6 @@
 package com.example.demo.serwis;
 
+import com.example.demo.exceptions.SamochodException;
 import com.example.demo.model.*;
 import com.example.demo.utils.Utils;
 import org.springframework.stereotype.Service;
@@ -14,27 +15,30 @@ public class SamochodSerwis {
 
     public Samochod stworzSamochod(TypSamochodu typSamochodu) {
         Samochod samochod;
-        switch (typSamochodu) {
-            case SUV:
-                samochod = new BigCar();
-                break;
-            case COUPE:
-                samochod = new FastCar();
-                break;
-            case HATCHBACK:
-                samochod = new CityCar();
-                break;
-            default:
-                samochod = null;
-                break;
+        try {
+            switch (typSamochodu) {
+                case SUV:
+                    samochod = new BigCar();
+                    break;
+                case COUPE:
+                    samochod = new FastCar();
+                    break;
+                case HATCHBACK:
+                    samochod = new CityCar();
+                    break;
+                default:
+                    samochod = null;
+                    break;
+            }
+            System.out.println("Nowy samochód to: " + samochod.toString());
+            samochod.wyliczenieDrogiHamowania(samochod);
+            return samochod;
+        } catch (Exception exception) {
+            throw new SamochodException(typSamochodu);
         }
-        System.out.println("Nowy samochód to: " + samochod.toString());
-        samochod.wyliczenieDrogiHamowania(samochod);
-        return samochod;
-
-
     }
-    public  Samochod losowoStworzSamochod(){
+
+    public Samochod losowoStworzSamochod() {
         ArrayList<TypSamochodu> listaTypowSamochodu = new ArrayList<>(Arrays.asList(TypSamochodu.values()));
         Samochod samochod;
 
@@ -42,14 +46,11 @@ public class SamochodSerwis {
         TypSamochodu wylosowanyTypSamochodu = listaTypowSamochodu.get(wylosowanyIndex);
         samochod = stworzSamochod(wylosowanyTypSamochodu);
 
-        return  samochod;
+        return samochod;
     }
 
 
-
-
-
-    }
+}
 
 
 

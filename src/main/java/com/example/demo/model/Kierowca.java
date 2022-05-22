@@ -18,6 +18,11 @@ public abstract class Kierowca {
         this.stanTrzezwosci = stanTrzezwosci;
         this.szybkoscReakcji = szybkoscReakcji;
         this.zycieKierowcy = zycieKierowcy;
+
+    }
+
+    public void setZycieKierowcy(Integer zycieKierowcy) {
+        this.zycieKierowcy = zycieKierowcy;
     }
 
     public TypKierowcy getTypKierowcy() {
@@ -43,10 +48,7 @@ public abstract class Kierowca {
     public Integer getZycieKierowcy() {
         return  zycieKierowcy; }
 
-    public void setZycieKierowcy(Integer zycieKierowcy) {
 
-        this.zycieKierowcy = zycieKierowcy;
-    }
 
     public void setSzybkoscReakcji(Integer szybkoscReakcji) {
 
@@ -136,6 +138,14 @@ public abstract class Kierowca {
         }
     }
 
+    public int aktualizacjaZyciaPitsop(Kierowca kierowca){
+        int zwiekszenieZyciaKierowcy = kierowca.getZycieKierowcy() + 10;
+        kierowca.setZycieKierowcy(zwiekszenieZyciaKierowcy);
+        System.out.println("Dzięki zjechaniu do pitstopu  uczestnik " + kierowca.getTypKierowcy() + " zyskuje 10 punktów życia " +
+                "i teraz jego życie wynosi: " + kierowca.getZycieKierowcy() +".");
+        return zwiekszenieZyciaKierowcy;
+    }
+
     @Override
     public String toString() {
         return getTypKierowcy() + " znajomosc trasy: " + getZnajomoscTrasy() + " poziom trzezwosci: " + getStanTrzezwosci() + " stan trzezwosci: "
@@ -143,20 +153,4 @@ public abstract class Kierowca {
     }
 }
 
-   //W klasie Kierowcy utwórz pole ryzyko, do tego możesz dorzucić getter i setter bo będziemy tę wartość ustawiać i pobierać.
-//Następnie utwórz metodę ustawienieRyzyka. Od sumy znajomości trasy i szybkości reakcji kierowcy będzie zależec ryzyko.
-// Max ryzyka to 20 więc zrób różnicę pomiędzy 20, a sumą znajomości trasy i szybkości reakcji.
-// I dalej jeśli ryzyko jest >= 4 i kierowca jest trzeźwy to obliczone wcześniej ryzyko zmniejszamy o 4.
-// Jeśli ryzyko jest < 4 i kierowca jest trzeźwy to ustaw ryzyko na 0, a jeśli kierowca jest nietrzeźwy to ryzyko podnosimy o 4.
-// Czyli mamy jakieś ryzyko na początku obliczone, a potem w zależności od tego czy kierowca jest trzeźwy dokonujemy jeszcze dodatkowej modyfikacji.
 
-
-/*
-Poprawka do drugiej części - wyścigSerwis - metoda przejazdOdcinekProsty. Trochę inaczej jednak będzie. Jeśli trudność odcinka >= 1 i
-znajomość trasy < 4 to teraz dwa warianty:
-        1. jeśli szybkość reakcji < 3 lub ryzyko > 15 to odejmij życie i stan auta o Utils.losuj(0,3).
-        2. jeśli szybkość reakcji < 5 lub ryzyko > 10 to odejmij życie i stan auta o Utils.losuj(0,2).
-        Natomiast jeśli trudność odcinka == 0 i znajomość trasy < 3 to jeden wariant:
-        1. jeśli szybkość reakcji < 3 lub ryzyko > 15 to odejmij życie i stan auta o Utils.losuj(0,1).
-        Dalej bez zmian czyli tutaj wywoał metodę liczącą szybkość przejazdu odcinka gdzie zapisany będzie czas i dystans.
-        Dalej wywoałamy metodę zmianaOdcinka (jej jeszcze nie mamy) i tabelę (tego też jeszcze nie mamy).*/

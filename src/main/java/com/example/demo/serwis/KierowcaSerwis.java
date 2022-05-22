@@ -17,7 +17,7 @@ public class KierowcaSerwis {
         try {
             switch (typKierowcy) {
                 case UBER:
-                    kierowca = new KierowcaUber();
+                    kierowca = new  KierowcaUber();
                     break;
                 case DZIAD:
                     kierowca = new KierowcaDziad();
@@ -34,7 +34,7 @@ public class KierowcaSerwis {
             kierowca.ustawienieRyzyka();
             System.out.println("Nowy kierowca to: " + kierowca.toString());
             return kierowca;
-        } catch (RuntimeException exception){
+        } catch (Exception exception){
             throw new KierowcaException(typKierowcy);
         }
     }
