@@ -45,7 +45,7 @@ public class WyscigSerwis {
         System.out.println("Wszyscy na starcie");
         for (Uczestnik uczestnik : listaUczestnikow) {
             System.out.println();
-            obslugaPojedynczegoOdcinka(null, trasa.getListaOdcinkow().get(0), uczestnik.getSamochod(), uczestnik.getKierowca(), listaUczestnikow); //start
+            obslugaPojedynczegoOdcinka(null, trasa.getListaOdcinkow().get(0), listaUczestnikow, uczestnik); //start
 
         }
         for (int i = 0; i < trasa.getListaOdcinkow().size(); i++) {
@@ -59,12 +59,12 @@ public class WyscigSerwis {
                 System.out.println();
                 try {
                     Odcinek nastepnyOdcinek = trasa.getListaOdcinkow().get(i + 1);
-                    obslugaPojedynczegoOdcinka(obecnyOdcinek, nastepnyOdcinek, uczestnik.getSamochod(), uczestnik.getKierowca(), listaUczestnikow);
+                    obslugaPojedynczegoOdcinka(obecnyOdcinek, nastepnyOdcinek,  listaUczestnikow, uczestnik);
                     if (listaUczestnikow.size() < 1) {
                         break;
                     }
                 } catch (Exception e) {
-                    obslugaPojedynczegoOdcinka(obecnyOdcinek, null, uczestnik.getSamochod(), uczestnik.getKierowca(), listaUczestnikow);
+                    obslugaPojedynczegoOdcinka(obecnyOdcinek, null,  listaUczestnikow, uczestnik);
                     if (listaUczestnikow.size() < 1) {
                         break;
                     }
@@ -84,8 +84,9 @@ public class WyscigSerwis {
     }
 
 
-    private void obslugaPojedynczegoOdcinka(Odcinek obecnyOdcinek, Odcinek nastepnyOdcinek, Samochod samochod, Kierowca kierowca, List<Uczestnik> listaUczestnikow) {
-
+    private void obslugaPojedynczegoOdcinka(Odcinek obecnyOdcinek, Odcinek nastepnyOdcinek, List<Uczestnik> listaUczestnikow, Uczestnik uczestnik) {
+    Kierowca kierowca = uczestnik.getKierowca();
+    Samochod samochod = uczestnik.getSamochod();
         //start
         if (obecnyOdcinek == null) {
             System.out.println("Kierowca " + kierowca.getTypKierowcy() + " przekroczył linię startu i rozpoczął zmagania w jakże trudnym wyścigu");
@@ -99,7 +100,8 @@ public class WyscigSerwis {
             if (listaUczestnikow.isEmpty()) {
                 System.out.println("Wyścig zostaje zakończony, ponieważ żaden z uczestników nie jest w stanie go dokończyć. Zobaczmy na końcową tabelę wyników:");
                 utworzenieTabeliWynikow(listaUczestnikow);
-            } else {
+            } else if (listaUczestnikow.contains(uczestnik)) {
+
                 samochod.dodajCzasPrzejazduOdcinka(samochod.szybkoscPrzejazduOdcinka(obecnyOdcinek));
                 samochod.dodajPrzejechanyDystans(obecnyOdcinek);
                 System.out.println("Kierowca " + kierowca.getTypKierowcy() + " przejechał odcinek " + obecnyOdcinek.getNazwaOdcinka() +
@@ -121,7 +123,7 @@ public class WyscigSerwis {
             if (listaUczestnikow.isEmpty()) {
                 System.out.println("Wyścig zostaje zakończony, ponieważ żaden z uczestników nie jest w stanie go dokończyć. Zobaczmy na końcową tabelę wyników:");
                 utworzenieTabeliWynikow(listaUczestnikow);
-            } else {
+            } else if (listaUczestnikow.contains(uczestnik)) {
                 samochod.dodajCzasPrzejazduOdcinka(samochod.szybkoscPrzejazduOdcinka(obecnyOdcinek));
                 samochod.dodajPrzejechanyDystans(obecnyOdcinek);
                 System.out.println("Kierowca " + kierowca.getTypKierowcy() + " przejechał odcinek " + obecnyOdcinek.getNazwaOdcinka() +
@@ -137,6 +139,7 @@ public class WyscigSerwis {
         switch (obecnyOdcinek.getTypOdcinka()) {
             case PITSTOP:
                 pitstop(obecnyOdcinek,kierowca,samochod);
+                break;
             case PROSTY:
                 przejazdOdcinekProsty(obecnyOdcinek, kierowca, samochod, listaUczestnikow);
                 break;
@@ -556,7 +559,6 @@ public class WyscigSerwis {
                 System.out.println("Kierowca " + kierowca.getTypKierowcy() + " jadący samochodem " + samochod.getTypSamochodu() + " nie dostosował swoich" +
                         " umiejętności i prędkości samochodu podczas przejazdu przez odcinek " + nazwaOdcinka +
                         " w wyniku czego odniósł bardzo ciężkie obrażenia i nie może kontynuować wyścigu.");
-                usuwanieUczestnikaLubSamochodu(listaUczestnikow);
             }
 
         } else if ((aktualizacjaZycia == 0 && (aktualizacjaWytrzymalosci != 0))) {
@@ -699,7 +701,7 @@ public class WyscigSerwis {
                 for (int i = pominDublaIndex; i < listaUczestnikow.size(); i++) {
                     if (!uczestnik.equals(listaUczestnikow.get(i))) {
                         aktualizacjaKierowcaSamochodStarcie(uczestnik, listaUczestnikow.get(i), odcinek, listaUczestnikow);
-                        System.out.println(uczestnik.getKierowca().getTypKierowcy() + " " + uczestnik.getSamochod().getTypSamochodu() + "  z  " + listaUczestnikow.get(i).getKierowca().getTypKierowcy() + " " + listaUczestnikow.get(i).getSamochod().getTypSamochodu());
+                        System.out.println(uczestnik.getKierowca().getUuid() + " " + uczestnik.getKierowca().getTypKierowcy() + " " + uczestnik.getSamochod().getTypSamochodu() + "  z  " + listaUczestnikow.get(i).getKierowca().getUuid() + " " + listaUczestnikow.get(i).getKierowca().getTypKierowcy() + " " + listaUczestnikow.get(i).getSamochod().getTypSamochodu());
 
                     }
 
@@ -854,13 +856,12 @@ public class WyscigSerwis {
     }
     public void dodanieCzasuKara(Samochod samochod){
         samochod.setCzasPrzejazdu(samochod.getCzasPrzejazdu() + 2.0);
-        System.out.println("DODAłoooooooooooooo");
+
     }
 
 
 
-// TODO: sprawdzić do następnego odcinka jak idzie do pitstopu dlaczego się odejmuje życie itp,
-    //TODO Michał: trasaException wyrzuca i tabela wyników usuwanie uczestnika
+
 
 
 

@@ -14,16 +14,17 @@ public class KierowcaSerwis {
 
     public Kierowca stworzKierowce(TypKierowcy typKierowcy) {
         Kierowca kierowca;
+
         try {
             switch (typKierowcy) {
                 case UBER:
-                    kierowca = new  KierowcaUber();
+                    kierowca = new  KierowcaUber(Utils.stworzUUID());
                     break;
                 case DZIAD:
-                    kierowca = new KierowcaDziad();
+                    kierowca = new KierowcaDziad(Utils.stworzUUID());
                     break;
                 case BOR:
-                    kierowca = new KierowcaBOR();
+                    kierowca = new KierowcaBOR(Utils.stworzUUID());
                     break;
                 default:
                     kierowca = null;

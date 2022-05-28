@@ -3,22 +3,24 @@ package com.example.demo.model;
 
 import com.example.demo.utils.Utils;
 
+import java.util.UUID;
+
 public abstract class Kierowca {
     private TypKierowcy typKierowcy;
     private Integer znajomoscTrasy;
     private Integer stanTrzezwosci;
     private Integer szybkoscReakcji;
     private Integer zycieKierowcy;
+    private final UUID uuid;
 
 
-
-    public Kierowca(TypKierowcy typKierowcy, Integer znajomoscTrasy, Integer stanTrzezwosci, Integer szybkoscReakcji, Integer zycieKierowcy) {
+    public Kierowca(TypKierowcy typKierowcy, Integer znajomoscTrasy, Integer stanTrzezwosci, Integer szybkoscReakcji, Integer zycieKierowcy,  UUID uuid) {
         this.typKierowcy = typKierowcy;
         this.znajomoscTrasy = znajomoscTrasy;
         this.stanTrzezwosci = stanTrzezwosci;
         this.szybkoscReakcji = szybkoscReakcji;
         this.zycieKierowcy = zycieKierowcy;
-
+        this.uuid = uuid;
     }
 
     public void setZycieKierowcy(Integer zycieKierowcy) {
@@ -63,6 +65,10 @@ public abstract class Kierowca {
 
     public void setRyzyko(Integer ryzyko) {
         this.ryzyko = ryzyko;
+    }
+
+    public UUID getUuid() {
+        return uuid;
     }
 
 
@@ -149,8 +155,10 @@ public abstract class Kierowca {
     @Override
     public String toString() {
         return getTypKierowcy() + " znajomosc trasy: " + getZnajomoscTrasy() + " poziom trzezwosci: " + getStanTrzezwosci() + " stan trzezwosci: "
-                + czyTrzezwy() + " szybkosc reakcji: " + getSzybkoscReakcji() + " ryzyko: " + getRyzyko();
+                + czyTrzezwy() + " szybkosc reakcji: " + getSzybkoscReakcji() + " ryzyko: " + getRyzyko() + " ID: " + getUuid();
     }
+
+
 }
 
 
