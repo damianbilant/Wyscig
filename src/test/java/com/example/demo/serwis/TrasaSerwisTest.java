@@ -10,7 +10,6 @@ import java.util.List;
 
 public class TrasaSerwisTest {
 
-
     @Test
 
     public void czyTworzyTrase() {
@@ -29,13 +28,15 @@ public class TrasaSerwisTest {
             //when
             Trasa trasa = trasaSerwis.stworzTrase(pogoda, level, pitstopSerwis);
             //then
-            // test1: sumowanie ilości odcinków metoda i porównać do trasa.getListaOdcinkow().size();
-            //Assert.assertTrue();
+
+
             Assert.assertTrue(trasa.getListaOdcinkow().get(0).getTypOdcinka().equals(TypOdcinka.PROSTY));
             Assert.assertFalse(trasa.getListaOdcinkow().get(0).getTypOdcinka().equals(TypOdcinka.ZAKRET));
             Assert.assertFalse(trasa.getListaOdcinkow().get(0).getTypOdcinka().equals(TypOdcinka.PODJAZD));
             Assert.assertFalse(trasa.getListaOdcinkow().get(0).getTypOdcinka().equals(TypOdcinka.ZJAZD));
             Assert.assertTrue(trasa.getListaOdcinkow().size() <= sumowanieOdcinkow(level,trasa));
+            Assert.assertTrue(pitstopSerwis.wylosujIloscPitstopow(pogoda,level) >= iloscPitstopow(trasa));
+
 
             for (int i = 1; i < trasa.getListaOdcinkow().size(); i++) {
                 if (trasa.getListaOdcinkow().get(i).getTrudnoscOdcinka() == trasa.getListaOdcinkow().get(i - 1).getTrudnoscOdcinka()) {
@@ -82,4 +83,3 @@ public class TrasaSerwisTest {
     }
 }
 
-//TODO:czy pitstopów jest co najmniej tyle ile jest w wylosuj czy w trasie rzeczywiście tyle powstaje ile powinno
