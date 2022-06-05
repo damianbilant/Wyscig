@@ -11,17 +11,9 @@ public class Wyniki {
         this.czasPrzejazduUczestnika = czasPrzejazduUczestnika;
     }
 
-
     public Uczestnik getUczestnik() {
         return uczestnik;
     }
-
-    public Double getCzasPrzejazduUczestnika() {
-        return czasPrzejazduUczestnika;
-    }
-
-
-
 
 }
 

@@ -1,6 +1,7 @@
 package com.example.demo.serwis;
 
 import com.example.demo.model.*;
+import com.example.demo.model.odcinek.TypOdcinka;
 import org.junit.Assert;
 import org.junit.Test;
 import java.util.ArrayList;

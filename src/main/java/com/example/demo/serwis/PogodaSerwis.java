@@ -5,7 +5,6 @@ import com.example.demo.utils.Utils;
 import org.springframework.stereotype.Service;
 
 @Service
-
 public class PogodaSerwis {
 
     public static Pogoda wylosujPogode() {

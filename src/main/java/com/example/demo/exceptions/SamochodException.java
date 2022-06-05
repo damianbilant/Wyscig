@@ -1,6 +1,6 @@
 package com.example.demo.exceptions;
 
-import com.example.demo.model.TypSamochodu;
+import com.example.demo.model.samochod.TypSamochodu;
 
 import java.text.MessageFormat;
 

@@ -1,10 +1,8 @@
 package com.example.demo.serwis;
 
 
-import com.example.demo.model.Kierowca;
-import com.example.demo.model.Samochod;
-import com.example.demo.model.TypKierowcy;
-import com.example.demo.model.TypSamochodu;
+import com.example.demo.model.kierowca.Kierowca;
+import com.example.demo.model.kierowca.TypKierowcy;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.After;

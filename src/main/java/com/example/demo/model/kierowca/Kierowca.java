@@ -1,6 +1,8 @@
-package com.example.demo.model;
+package com.example.demo.model.kierowca;
 
 
+import com.example.demo.model.Pogoda;
+import com.example.demo.model.samochod.Samochod;
 import com.example.demo.utils.Utils;
 
 import java.util.UUID;
@@ -117,13 +119,6 @@ public abstract class Kierowca {
             samochod.setSzybkosc(samochod.getSzybkosc() + 5);
             System.out.println("Ze względu na dobrą znajomość trasy kierowcy " + getTypKierowcy() +
                     " prędkość na tym odcinku (prostym) zostaje zwiększona o 5 km/h i wynosi " + samochod.getSzybkosc());
-        }
-    }
-    public  void znajomoscTrasyPredkoscReset (Samochod samochod){
-        if(getZnajomoscTrasy() >= 9) {
-            samochod.setSzybkosc(samochod.getSzybkosc() - 15);
-        } else if ( getZnajomoscTrasy() >= 7) {
-            samochod.setSzybkosc(samochod.getSzybkosc() - 5);
         }
     }
 

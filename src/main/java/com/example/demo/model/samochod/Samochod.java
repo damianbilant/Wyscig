@@ -1,6 +1,10 @@
-package com.example.demo.model;
+package com.example.demo.model.samochod;
 
 
+import com.example.demo.model.odcinek.Odcinek;
+import com.example.demo.model.Pogoda;
+import com.example.demo.model.odcinek.TypOdcinka;
+import com.example.demo.model.kierowca.Kierowca;
 import com.example.demo.utils.Utils;
 
 public abstract class Samochod {
@@ -104,14 +108,12 @@ public abstract class Samochod {
         return drogaHamowania;
     }
 
-
     private void aktualizacjaSzybkosciOdPogody(Pogoda pogoda) {
         Integer zmianaSzybkosci = getSzybkosc() + pogoda.getZmianaSzybkosciSamochod();
         setSzybkosc(zmianaSzybkosci);
         System.out.println("Ze względu na pogodę szybkość samochodu " + getTypSamochodu() + " to: " + zmianaSzybkosci);
 
     }
-
 
     private void aktualizacjaHamowaniaOdPogody(Pogoda pogoda) {
         Integer zmianaHamowania = getDrogaHamowania() + pogoda.getZmianaHamowaniaSamochod();
@@ -131,21 +133,21 @@ public abstract class Samochod {
     public int aktualizacjaWytrzymalosci(int minWytrzymaloscSamochodu, int maxWytrzymaloscSamochodu) {
         Integer zmniejszeniePunktowWytrzymalosciSamochodu = Utils.losuj(minWytrzymaloscSamochodu, maxWytrzymaloscSamochodu);
         Integer zmniejszenieWytrzymalosciSamochodu = getWytrzymaloscSamochodu() - zmniejszeniePunktowWytrzymalosciSamochodu;
-            setWytrzymaloscSamochodu(zmniejszenieWytrzymalosciSamochodu);
+        setWytrzymaloscSamochodu(zmniejszenieWytrzymalosciSamochodu);
         return zmniejszeniePunktowWytrzymalosciSamochodu;
     }
 
     public double szybkoscPrzejazduOdcinka(Odcinek odcinek) {
         double s = Double.valueOf(odcinek.getDlugoscOdcinka());
         double v = Double.valueOf(getSzybkosc());
-        double czasPrzejazduOdcinka = (s / v)* 60;
+        double czasPrzejazduOdcinka = (s / v) * 60;
         czasPrzejazduOdcinka *= 10; //czasPrzejazduOdcinka = czasPrzejazduOdcinka * 10;
         czasPrzejazduOdcinka = Math.round(czasPrzejazduOdcinka);
         czasPrzejazduOdcinka /= 10; //czasPrzejazduOdcinka = czasPrzejazduOdcinka / 10;
         return czasPrzejazduOdcinka;
     }
 
-    public double czasPrzejazduTotal(){
+    public double czasPrzejazduTotal() {
         double totalCzasPrzejazdu = getCzasPrzejazdu();
         totalCzasPrzejazdu *= 10;
         totalCzasPrzejazdu = Math.round(totalCzasPrzejazdu);
@@ -161,40 +163,32 @@ public abstract class Samochod {
         System.out.println("Czas odcinka " + czasPrzejazduOdcinka);
     }
 
-    public void resetCzasuPrzejazdu() {
-
-    }
-
     public void dodajPrzejechanyDystans(Odcinek odcinek) {
         przejechanyDystans += odcinek.getDlugoscOdcinka();
         System.out.println("Dystans total " + getPrzejechanyDystans());
         System.out.println("Dystans odcinka " + odcinek.getDlugoscOdcinka());
     }
 
-    public void resetPrzejechanegoDystansu() {
-
-    }
-
     public void limitZmianyPredkosciIzmianaPredkosci(Integer nowaszybkosc, TypOdcinka obecnyTypOdcinka, Kierowca kierowca) {
         if (getLicznikWzrostuPredkosci() == 0 || getLicznikWzrostuPredkosci() == 1) {
             if (getSzybkosc() < nowaszybkosc) {
-                setLicznikWzrostuPredkosci(getLicznikWzrostuPredkosci()+1);
+                setLicznikWzrostuPredkosci(getLicznikWzrostuPredkosci() + 1);
                 setSzybkosc(nowaszybkosc);
                 System.out.println("Na odcinku " + obecnyTypOdcinka + " kierowca " + kierowca.getTypKierowcy() + " jadący "
                         + getTypSamochodu() + " przyspieszył do " + nowaszybkosc + " km/h");
                 if (getLicznikSpadkuPredkosci() > 0) {
-                    setLicznikSpadkuPredkosci(getLicznikSpadkuPredkosci()-1);
+                    setLicznikSpadkuPredkosci(getLicznikSpadkuPredkosci() - 1);
                 }
             }
         }
         if (getLicznikSpadkuPredkosci() == 0 || getLicznikSpadkuPredkosci() == 1) {
             if (getSzybkosc() > nowaszybkosc) {
-                setLicznikSpadkuPredkosci(getLicznikSpadkuPredkosci()+1);
+                setLicznikSpadkuPredkosci(getLicznikSpadkuPredkosci() + 1);
                 setSzybkosc(nowaszybkosc);
                 System.out.println("Na odcinku " + obecnyTypOdcinka + " kierowca " + kierowca.getTypKierowcy() + " jadący "
                         + getTypSamochodu() + " zwolnil do " + nowaszybkosc + " km/h");
                 if (getLicznikWzrostuPredkosci() > 0) {
-                    setLicznikWzrostuPredkosci(getLicznikWzrostuPredkosci()-1);
+                    setLicznikWzrostuPredkosci(getLicznikWzrostuPredkosci() - 1);
                 }
             }
         }
@@ -204,15 +198,16 @@ public abstract class Samochod {
         int zwiekszenieWytrzymalosciSamochodu = samochod.getWytrzymaloscSamochodu() + 10;
         setWytrzymaloscSamochodu(zwiekszenieWytrzymalosciSamochodu);
         System.out.println("Dzięki zjechaniu do pitstopu samochód uczestnika " + kierowca.getTypKierowcy() + " zyskuje 10 punktów wytrzymałości " +
-                "i teraz jego wytrzymałość wynosi: " + samochod.getWytrzymaloscSamochodu() +".");
-
-
+                "i teraz jego wytrzymałość wynosi: " + samochod.getWytrzymaloscSamochodu() + ".");
         return zwiekszenieWytrzymalosciSamochodu;
     }
 
+    public void dodanieCzasuKara(Samochod samochod) {
+        samochod.setCzasPrzejazdu(samochod.getCzasPrzejazdu() + 2.0);
 
+    }
 
-  @Override
+    @Override
     public String toString() {
         return "typ samochodu : " + getTypSamochodu() + ", ciężar samochodu : " + getCiezar() + " kg" + ", skuteczność hamowania samochodu : " + getSkutecznoscHamowania() + ", szybkość max samochodu : " + getSzybkosc() + " km/h";
     }

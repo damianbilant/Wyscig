@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.model.odcinek;
 
 import com.example.demo.utils.Utils;
 

@@ -1,7 +1,11 @@
 package com.example.demo.serwis;
 
 import com.example.demo.exceptions.KierowcaException;
-import com.example.demo.model.*;
+import com.example.demo.model.kierowca.Kierowca;
+import com.example.demo.model.kierowca.KierowcaBOR;
+import com.example.demo.model.kierowca.KierowcaDziad;
+import com.example.demo.model.kierowca.KierowcaUber;
+import com.example.demo.model.kierowca.TypKierowcy;
 import com.example.demo.utils.Utils;
 import org.springframework.stereotype.Service;
 
@@ -9,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 @Service
-
 public class KierowcaSerwis {
 
     public Kierowca stworzKierowce(TypKierowcy typKierowcy) {
@@ -18,7 +21,7 @@ public class KierowcaSerwis {
         try {
             switch (typKierowcy) {
                 case UBER:
-                    kierowca = new  KierowcaUber(Utils.stworzUUID());
+                    kierowca = new KierowcaUber(Utils.stworzUUID());
                     break;
                 case DZIAD:
                     kierowca = new KierowcaDziad(Utils.stworzUUID());

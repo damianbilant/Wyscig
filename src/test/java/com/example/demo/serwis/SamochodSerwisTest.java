@@ -1,9 +1,7 @@
 package com.example.demo.serwis;
 
-import com.example.demo.model.Kierowca;
-import com.example.demo.model.Samochod;
-import com.example.demo.model.TypKierowcy;
-import com.example.demo.model.TypSamochodu;
+import com.example.demo.model.samochod.Samochod;
+import com.example.demo.model.samochod.TypSamochodu;
 import org.junit.Assert;
 import org.junit.Test;
 

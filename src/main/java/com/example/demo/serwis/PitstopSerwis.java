@@ -5,10 +5,7 @@ import com.example.demo.utils.Utils;
 import org.springframework.stereotype.Service;
 
 @Service
-
 public class PitstopSerwis {
-
-
 
     public Integer wylosujIloscPitstopow(Pogoda pogoda,TrasaLevel trasaLevel) {
         int iloscPitstopow = 0;

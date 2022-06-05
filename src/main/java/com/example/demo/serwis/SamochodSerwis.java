@@ -1,16 +1,18 @@
 package com.example.demo.serwis;
 
 import com.example.demo.exceptions.SamochodException;
-import com.example.demo.model.*;
+import com.example.demo.model.samochod.BigCar;
+import com.example.demo.model.samochod.CityCar;
+import com.example.demo.model.samochod.FastCar;
+import com.example.demo.model.samochod.Samochod;
+import com.example.demo.model.samochod.TypSamochodu;
 import com.example.demo.utils.Utils;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 @Service
-
 public class SamochodSerwis {
 
     public Samochod stworzSamochod(TypSamochodu typSamochodu) {

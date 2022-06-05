@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import com.example.demo.model.odcinek.Odcinek;
+
 import java.util.List;
 
 public class Trasa {

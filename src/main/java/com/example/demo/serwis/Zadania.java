@@ -39,6 +39,11 @@ public class Zadania {
 
     //5. for po wszystkich uczesnikach , kolejny for
 
+    //TODO: Damian Stwórz klase Pokoj (nazwa pokoju) i Gosc (imie, nazwisko i wiek). Zrob liste gosci i dwa pokoje. Za pomocą streama zrób selekcje gosci.
+    //Goscie majacy imie na inna litere niz "A" i wiek powyzej 30 lat ida do jenego pokoju, a reszta do drugiego. Potem sprawdz
+    //ile jest osob w pokojach i czy w sumie jest tyle samo co na liscie gosci.
+    //Optionale -> obejrzyj ten materiał.
+
     public static void main(String[] args) {
 
 

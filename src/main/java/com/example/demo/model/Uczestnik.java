@@ -1,5 +1,8 @@
 package com.example.demo.model;
 
+import com.example.demo.model.kierowca.Kierowca;
+import com.example.demo.model.samochod.Samochod;
+
 public class Uczestnik {
 
     private Kierowca kierowca;

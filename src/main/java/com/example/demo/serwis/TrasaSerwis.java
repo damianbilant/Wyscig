@@ -2,6 +2,13 @@ package com.example.demo.serwis;
 
 import com.example.demo.exceptions.TrasaException;
 import com.example.demo.model.*;
+import com.example.demo.model.odcinek.Odcinek;
+import com.example.demo.model.odcinek.OdcinekPitstop;
+import com.example.demo.model.odcinek.OdcinekPodjazd;
+import com.example.demo.model.odcinek.OdcinekProsty;
+import com.example.demo.model.odcinek.OdcinekZakret;
+import com.example.demo.model.odcinek.OdcinekZjazd;
+import com.example.demo.model.odcinek.TypOdcinka;
 import com.example.demo.utils.Utils;
 import org.springframework.stereotype.Service;
 
@@ -10,10 +17,9 @@ import java.util.Collections;
 import java.util.List;
 
 @Service
-
 public class TrasaSerwis {
 
-    private static final String PITSTOP="Pitstop";
+    private static final String PITSTOP = "Pitstop";
 
     public Odcinek stworzOdcinek(TypOdcinka typOdcinka) {
         Odcinek odcinek;
@@ -163,22 +169,21 @@ public class TrasaSerwis {
 
         int iloscPitstopow = pitstopSerwis.wylosujIloscPitstopow(pogoda, trasaLevel);
         int iloscTrasy = listaOdcinkowZpierwszymProstym.size();
-        if (0 == iloscPitstopow){
+        if (0 == iloscPitstopow) {
             return listaOdcinkowZpierwszymProstym;
         }
         for (int i = 1; i < iloscPitstopow; i++) {
             int losujMiejscePitstopu = Utils.losuj(3, iloscTrasy - 1);
-            if(!listaOdcinkowZpierwszymProstym.get(losujMiejscePitstopu).getNazwaOdcinka().equals(PITSTOP)
-            && !listaOdcinkowZpierwszymProstym.get(losujMiejscePitstopu - 1).getNazwaOdcinka().equals(PITSTOP)
-            && !listaOdcinkowZpierwszymProstym.get(losujMiejscePitstopu + 1).getNazwaOdcinka().equals(PITSTOP)){
+            if (!listaOdcinkowZpierwszymProstym.get(losujMiejscePitstopu).getNazwaOdcinka().equals(PITSTOP)
+                    && !listaOdcinkowZpierwszymProstym.get(losujMiejscePitstopu - 1).getNazwaOdcinka().equals(PITSTOP)
+                    && !listaOdcinkowZpierwszymProstym.get(losujMiejscePitstopu + 1).getNazwaOdcinka().equals(PITSTOP)) {
                 OdcinekPitstop odcinekPitstop = new OdcinekPitstop();
-                listaOdcinkowZpierwszymProstym.add(losujMiejscePitstopu,odcinekPitstop);
+                listaOdcinkowZpierwszymProstym.add(losujMiejscePitstopu, odcinekPitstop);
             }
 
         }
         return listaOdcinkowZpierwszymProstym;
     }
-
 
 
 }

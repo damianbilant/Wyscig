@@ -1,6 +1,5 @@
-package com.example.demo.model;
+package com.example.demo.model.samochod;
 
-import com.example.demo.serwis.SamochodSerwis;
 import com.example.demo.utils.Utils;
 
 public class CityCar extends Samochod{
