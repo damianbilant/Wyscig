@@ -27,7 +27,8 @@ public class WyscigSerwis {
     private final WyscigNastepnySerwis wyscigNastepnySerwis;
     private final WyscigZycieSerwis wyscigZycieSerwis;
 
-    public void tworzenieWyscigu() {
+
+    public void tworzenieWyscigu(int liczba) {
         System.out.println();
         Pogoda pogoda = PogodaSerwis.wylosujPogode();
         System.out.println();
@@ -39,7 +40,7 @@ public class WyscigSerwis {
         KierowcaSerwis kierowcaSerwis = new KierowcaSerwis();
         SamochodSerwis samochodSerwis = new SamochodSerwis();
         UczestnikSerwis uczestnikSerwis = new UczestnikSerwis();
-        List<Uczestnik> uczestnikList = uczestnikSerwis.stworzUczestnikow(kierowcaSerwis, samochodSerwis);
+        List<Uczestnik> uczestnikList = uczestnikSerwis.stworzUczestnikow(kierowcaSerwis, samochodSerwis, liczba);
         uczestnikSerwis.wypisanieUczestnikow(uczestnikList);
 
         wyscig(uczestnikList, trasa);

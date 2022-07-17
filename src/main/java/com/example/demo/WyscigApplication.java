@@ -14,14 +14,14 @@ public class WyscigApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(WyscigApplication.class, args);
 
-		WyscigZycieSerwis wyscigZycieSerwis = new WyscigZycieSerwis();
+		/*WyscigZycieSerwis wyscigZycieSerwis = new WyscigZycieSerwis();
 		WyscigPrzejazdSerwis wyscigPrzejazdSerwis = new WyscigPrzejazdSerwis(wyscigZycieSerwis);
 		WyscigStarcieSerwis wyscigStarcieSerwis = new WyscigStarcieSerwis(wyscigZycieSerwis);
 		WyscigNastepnySerwis wyscigNastepnySerwis = new WyscigNastepnySerwis(wyscigZycieSerwis);
 
 		WyscigSerwis wyscigSerwis = new WyscigSerwis(wyscigPrzejazdSerwis, wyscigStarcieSerwis, wyscigNastepnySerwis, wyscigZycieSerwis);
 		wyscigSerwis.tworzenieWyscigu();
-
+*/
 	}
 
 }

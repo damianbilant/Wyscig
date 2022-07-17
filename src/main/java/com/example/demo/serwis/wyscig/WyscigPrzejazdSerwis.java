@@ -17,6 +17,7 @@ public class WyscigPrzejazdSerwis {
     private WyscigZycieSerwis wyscigZycieSerwis;
 
     public WyscigPrzejazdSerwis(WyscigZycieSerwis wyscigZycieSerwis) {
+
         this.wyscigZycieSerwis = wyscigZycieSerwis;
     }
 
