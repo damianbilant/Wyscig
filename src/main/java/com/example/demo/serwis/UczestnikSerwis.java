@@ -8,6 +8,10 @@ import java.util.List;
 @Service
 public class UczestnikSerwis {
 
+    public List<Uczestnik> listaUczestnikow = new ArrayList<>();
+
+//TODO: stworzyć metodę publiczną która stworzy jednego uczestnika (nie uczestników)
+
     public List<Uczestnik> stworzUczestnikow(KierowcaSerwis kierowcaSerwis, SamochodSerwis samochodSerwis, int liczba) {
         List<Uczestnik> listaUczestnikow = new ArrayList<>();
         try {
