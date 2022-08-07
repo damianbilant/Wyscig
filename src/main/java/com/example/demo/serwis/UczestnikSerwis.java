@@ -10,7 +10,12 @@ public class UczestnikSerwis {
 
     public List<Uczestnik> listaUczestnikow = new ArrayList<>();
 
-//TODO: stworzyć metodę publiczną która stworzy jednego uczestnika (nie uczestników)
+
+    public Uczestnik stworzUczestnika(KierowcaSerwis kierowcaSerwis, SamochodSerwis samochodSerwis){
+        Uczestnik uczestnik = new Uczestnik(kierowcaSerwis.losowoStworzKierowce(), samochodSerwis.losowoStworzSamochod());
+        listaUczestnikow.add(uczestnik);
+        return uczestnik;
+    }
 
     public List<Uczestnik> stworzUczestnikow(KierowcaSerwis kierowcaSerwis, SamochodSerwis samochodSerwis, int liczba) {
         List<Uczestnik> listaUczestnikow = new ArrayList<>();

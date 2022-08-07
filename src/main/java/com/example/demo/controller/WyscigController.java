@@ -11,6 +11,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
 
 @RestController
 public class WyscigController {
@@ -31,20 +35,36 @@ public class WyscigController {
         wyscigSerwis.tworzenieWyscigu(liczba);
     }
 
-
-    private void zapiszUczestnika(){
-        uczestnikSerwis.tutaj metoda stworz uczestnika;
-
+    @RequestMapping(method = RequestMethod.POST, path = "/wyscig/zapiszuczestnika")
+    private Uczestnik zapiszUczestnika(){
+        Uczestnik uczestnik = uczestnikSerwis.stworzUczestnika(kierowcaSerwis, samochodSerwis);
+        return uczestnik;
     }
 
+    @RequestMapping(method = RequestMethod.GET, path = "/wyscig/pobierzuczestnikow" )
+    private List<Uczestnik> pobierzUczestnikow(){
+        return uczestnikSerwis.listaUczestnikow;
+    }
 
+    @RequestMapping(method = RequestMethod.DELETE, path = "/wyscig/usunuczestnikow")
+    private List<Uczestnik> usunUczestnikow(@RequestParam(value = "uuid") UUID uuid){
+        List<Uczestnik> listaUczestnikow = uczestnikSerwis.listaUczestnikow;
+        Optional<Uczestnik> uczestnik = listaUczestnikow.stream()
+                .filter(u -> u.getKierowca().getUuid().equals(uuid))
+                .findAny();
+        if(uczestnik.isPresent()){
+            listaUczestnikow.remove(uczestnik.get());
+        }
+        return listaUczestnikow;
+    }
 
-
-
-
+    @RequestMapping(method = RequestMethod.GET, path = "/wyscig/start")
+    private List<Uczestnik> startWyscigu(){
+    return wyscigSerwis.tworzenieWyscigu2(uczestnikSerwis.listaUczestnikow);
+    }
 }
-//TODO: do naszej wewnetrznej listy zapisywać pojedyńczych uczestników ale także pobierać i kasować poszczególnych uczestników z tej naszej wew listy i wszystkich usunąć,
-// chcemy odpalić wyścig z listą uczestników których stworzyliśmy i tych którzy dojechali do mety zapisać w bazie i pobrać
 
+//TODO:sprawdzam po skończonym wyścigu ci którzy nie dojechali to ich usunąć z listy (uczestnikSerwis.listaUczestnikow) i na liście żeby zostali tylko ci co
+// dojechali i zrobić im reset parametrów; zwycięzca żeby został zapisany w bazie;
 
 

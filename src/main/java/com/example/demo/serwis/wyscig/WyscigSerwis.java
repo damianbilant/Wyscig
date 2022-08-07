@@ -46,7 +46,23 @@ public class WyscigSerwis {
         wyscig(uczestnikList, trasa);
     }
 
-    public void wyscig(List<Uczestnik> listaUczestnikow, Trasa trasa) {
+    public List<Uczestnik> tworzenieWyscigu2(List<Uczestnik> listaUczestnikow) {
+        System.out.println();
+        Pogoda pogoda = PogodaSerwis.wylosujPogode();
+        System.out.println();
+
+        TrasaSerwis trasaSerwis = new TrasaSerwis();
+        PitstopSerwis pitstopSerwis = new PitstopSerwis();
+        Trasa trasa = trasaSerwis.stworzTrase(pogoda, trasaSerwis.wylosujPoziomTrudnosci(), pitstopSerwis);
+
+        UczestnikSerwis uczestnikSerwis = new UczestnikSerwis();
+        uczestnikSerwis.wypisanieUczestnikow(listaUczestnikow);
+
+        return wyscig(listaUczestnikow, trasa);
+
+    }
+
+    public List<Uczestnik> wyscig(List<Uczestnik> listaUczestnikow, Trasa trasa) {
 
         System.out.println();
         System.out.println("Wpływ pogody na samochód:");
@@ -99,6 +115,7 @@ public class WyscigSerwis {
             System.out.println("Tabela wyników:");
             utworzenieTabeliWynikow(listaUczestnikow);
         }
+        return listaUczestnikow;
     }
 
     @SneakyThrows
