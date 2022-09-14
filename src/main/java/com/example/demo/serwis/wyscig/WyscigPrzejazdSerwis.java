@@ -125,7 +125,7 @@ public class WyscigPrzejazdSerwis {
             samochod.dodanieCzasuKara(samochod);
         }
         if (kierowca.getZycieKierowcy() <= 10) {
-            kierowca.aktualizacjaZyciaPitsop(kierowca);
+            kierowca.aktualizacjaZyciaPitsop();
             samochod.dodanieCzasuKara(samochod);
         }
     }

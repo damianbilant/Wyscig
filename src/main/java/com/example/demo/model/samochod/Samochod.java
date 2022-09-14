@@ -207,6 +207,13 @@ public abstract class Samochod {
 
     }
 
+    public void resetSamochod(){
+        setWytrzymaloscSamochodu(100);
+        setLicznikSpadkuPredkosci(0);
+        setLicznikWzrostuPredkosci(0);
+        setCzasPrzejazdu(0.0);
+    }
+
     @Override
     public String toString() {
         return "typ samochodu : " + getTypSamochodu() + ", ciężar samochodu : " + getCiezar() + " kg" + ", skuteczność hamowania samochodu : " + getSkutecznoscHamowania() + ", szybkość max samochodu : " + getSzybkosc() + " km/h";

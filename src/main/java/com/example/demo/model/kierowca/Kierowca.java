@@ -139,12 +139,16 @@ public abstract class Kierowca {
         }
     }
 
-    public int aktualizacjaZyciaPitsop(Kierowca kierowca){
-        int zwiekszenieZyciaKierowcy = kierowca.getZycieKierowcy() + 10;
-        kierowca.setZycieKierowcy(zwiekszenieZyciaKierowcy);
-        System.out.println("Dzięki zjechaniu do pitstopu  uczestnik " + kierowca.getTypKierowcy() + " zyskuje 10 punktów życia " +
-                "i teraz jego życie wynosi: " + kierowca.getZycieKierowcy() +".");
+    public int aktualizacjaZyciaPitsop(){
+        int zwiekszenieZyciaKierowcy = getZycieKierowcy() + 10;
+        setZycieKierowcy(zwiekszenieZyciaKierowcy);
+        System.out.println("Dzięki zjechaniu do pitstopu  uczestnik " + getTypKierowcy() + " zyskuje 10 punktów życia " +
+                "i teraz jego życie wynosi: " + getZycieKierowcy() +".");
         return zwiekszenieZyciaKierowcy;
+    }
+
+    public void resetKierowca(){
+        setZycieKierowcy(100);
     }
 
     @Override

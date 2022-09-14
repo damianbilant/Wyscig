@@ -13,10 +13,11 @@ import com.example.demo.serwis.TrasaSerwis;
 import com.example.demo.serwis.UczestnikSerwis;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 @Service
 @RequiredArgsConstructor
@@ -26,9 +27,12 @@ public class WyscigSerwis {
     private final WyscigStarcieSerwis wyscigStarcieSerwis;
     private final WyscigNastepnySerwis wyscigNastepnySerwis;
     private final WyscigZycieSerwis wyscigZycieSerwis;
+    private final UczestnikSerwis uczestnikSerwis;
 
+    @Autowired
+    JdbcTemplate jdbcTemplate;
 
-    public void tworzenieWyscigu(int liczba) {
+    public List<Uczestnik> tworzenieWyscigu(int liczba) {
         System.out.println();
         Pogoda pogoda = PogodaSerwis.wylosujPogode();
         System.out.println();
@@ -43,10 +47,12 @@ public class WyscigSerwis {
         List<Uczestnik> uczestnikList = uczestnikSerwis.stworzUczestnikow(kierowcaSerwis, samochodSerwis, liczba);
         uczestnikSerwis.wypisanieUczestnikow(uczestnikList);
 
-        wyscig(uczestnikList, trasa);
+        return  wyscig(uczestnikList, trasa);
+
     }
 
-    public List<Uczestnik> tworzenieWyscigu2(List<Uczestnik> listaUczestnikow) {
+    public List<Uczestnik> tworzenieWyscigu(List<Uczestnik> listaUczestnikow) {
+        resetUczestnikow(listaUczestnikow);
         System.out.println();
         Pogoda pogoda = PogodaSerwis.wylosujPogode();
         System.out.println();
@@ -58,11 +64,39 @@ public class WyscigSerwis {
         UczestnikSerwis uczestnikSerwis = new UczestnikSerwis();
         uczestnikSerwis.wypisanieUczestnikow(listaUczestnikow);
 
-        return wyscig(listaUczestnikow, trasa);
-
+        List<Uczestnik> list = wyscig(listaUczestnikow, trasa);
+        aktualizacjaListy(list);
+        zapiszZwyciezce(list);
+        return list;
     }
 
-    public List<Uczestnik> wyscig(List<Uczestnik> listaUczestnikow, Trasa trasa) {
+    private void aktualizacjaListy (List<Uczestnik> listaUczestnikow){
+        for(Uczestnik uczestnik : uczestnikSerwis.listaUczestnikow)   {
+            if(!listaUczestnikow.contains(uczestnik)){
+                uczestnikSerwis.listaUczestnikow.remove(uczestnik);
+            }
+        }
+    }
+
+    private void resetUczestnikow(List<Uczestnik> listaUczestnikow){
+        for(Uczestnik uczestnik : listaUczestnikow)   {
+            uczestnik.getKierowca().resetKierowca();
+            uczestnik.getSamochod().resetSamochod();
+        }
+    }
+
+    private void zapiszZwyciezce(List<Uczestnik> listaUczestnikow){
+        if (!listaUczestnikow.isEmpty()){
+            Map<Uczestnik, Double> listaCzasuPrzejazdu = utworzenieTabeliWynikow(listaUczestnikow);
+            Uczestnik uczestnik = listaCzasuPrzejazdu.entrySet().stream().min(Map.Entry.comparingByValue()).get().getKey();
+            jdbcTemplate.update("insert into ZWYCIEZCYWYSCIGU (UUID,TYPSAMOCHODU,WYTRZYMAŁOŚĆSAMOCHODU,przejechanydystans,NAZWAKIEROWCY,ZYCIEKIEROWCY,CZASZAKONCZENIAWYSCIGU) values (?,?,?,?,?,?,?)",
+                    uczestnik.getKierowca().getUuid(),uczestnik.getSamochod().getTypSamochodu(), uczestnik.getSamochod().getWytrzymaloscSamochodu(),uczestnik.getSamochod().getPrzejechanyDystans(),uczestnik.getKierowca().getTypKierowcy(),
+                    uczestnik.getKierowca().getZycieKierowcy(),new Date());
+        }
+        }
+
+
+    private List<Uczestnik> wyscig(List<Uczestnik> listaUczestnikow, Trasa trasa) {
 
         System.out.println();
         System.out.println("Wpływ pogody na samochód:");
@@ -176,7 +210,7 @@ public class WyscigSerwis {
         }
     }
 
-    private void utworzenieTabeliWynikow(List<Uczestnik> listaUczestnikow) {
+    private Map<Uczestnik, Double> utworzenieTabeliWynikow(List<Uczestnik> listaUczestnikow) {
         Map<Uczestnik, Double> listaCzasuPrzejazdu = new HashMap<>();
         for (int i = 0; i < listaUczestnikow.size(); i++) {
             for (Uczestnik zawodnik : listaUczestnikow) {
@@ -188,6 +222,7 @@ public class WyscigSerwis {
             }
         }
         listaCzasuPrzejazdu.entrySet().stream().sorted(Map.Entry.comparingByValue()).forEach(x -> System.out.println(x.getKey().getKierowca().getTypKierowcy() + " " + x.getValue()));
+    return listaCzasuPrzejazdu;
     }
 
 }
