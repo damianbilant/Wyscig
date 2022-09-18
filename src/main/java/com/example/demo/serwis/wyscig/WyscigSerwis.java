@@ -66,7 +66,9 @@ public class WyscigSerwis {
 
         List<Uczestnik> list = wyscig(listaUczestnikow, trasa);
         aktualizacjaListy(list);
-        zapiszZwyciezce(list);
+        if (!list.isEmpty()) {
+            zapiszZwyciezce(list);
+        }
         return list;
     }
 
@@ -89,8 +91,10 @@ public class WyscigSerwis {
         if (!listaUczestnikow.isEmpty()){
             Map<Uczestnik, Double> listaCzasuPrzejazdu = utworzenieTabeliWynikow(listaUczestnikow);
             Uczestnik uczestnik = listaCzasuPrzejazdu.entrySet().stream().min(Map.Entry.comparingByValue()).get().getKey();
-            jdbcTemplate.update("insert into ZWYCIEZCYWYSCIGU (UUID,TYPSAMOCHODU,WYTRZYMAŁOŚĆSAMOCHODU,przejechanydystans,NAZWAKIEROWCY,ZYCIEKIEROWCY,CZASZAKONCZENIAWYSCIGU) values (?,?,?,?,?,?,?)",
-                    uczestnik.getKierowca().getUuid(),uczestnik.getSamochod().getTypSamochodu(), uczestnik.getSamochod().getWytrzymaloscSamochodu(),uczestnik.getSamochod().getPrzejechanyDystans(),uczestnik.getKierowca().getTypKierowcy(),
+            String czas = new Date().toString();
+            String id = uczestnik.getKierowca().getTypKierowcy() + czas;
+            jdbcTemplate.update("insert into ZWYCIEZCYWYSCIGU (id_zwyciezcyWyscigu,UUID,TYPSAMOCHODU,WYTRZYMAŁOŚĆSAMOCHODU,przejechanydystans,NAZWAKIEROWCY,ZYCIEKIEROWCY,CZASZAKONCZENIAWYSCIGU) values (?,?,?,?,?,?,?,?)",
+                    id,uczestnik.getKierowca().getUuid(),uczestnik.getSamochod().getTypSamochodu().name(), uczestnik.getSamochod().getWytrzymaloscSamochodu(),uczestnik.getSamochod().getPrzejechanyDystans(),uczestnik.getKierowca().getTypKierowcy().name(),
                     uczestnik.getKierowca().getZycieKierowcy(),new Date());
         }
         }

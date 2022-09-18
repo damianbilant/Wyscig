@@ -66,10 +66,6 @@ public class WyscigController {
 
 }
 
-//TODO:sprawdzam po skończonym wyścigu ci którzy nie dojechali to ich usunąć z listy (uczestnikSerwis.listaUczestnikow) i na liście żeby zostali tylko ci co
-// dojechali i zrobić im reset parametrów; zwycięzca żeby został zapisany w bazie; może być też w kolumnie data (timestamp) w momencie kiedy kończy się wyścig
-// podpowiedź tworzenieWyscigu(w wyscig serwis) i tworzenieWyscigu2(w wyscig serwis), druga lista w uczestnikserwis lista inmemory którą zasilamy przez postmana
-// i te dwie porównujemy np. za pomocą foreach tą z uczestnikserwis do tej z wyscigu serwis i jak nie ma to usuwam z tej inmemory, reeset przejść przez każdego
-// uczestnika i wywołać metodę resetującą parametry ( po wyścigu )
+
 
 
