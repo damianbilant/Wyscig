@@ -64,6 +64,10 @@ public class WyscigController {
     }
 
 
+    private void metodaMichala() {
+        //moje 9:16
+    }
+
 }
 
 
