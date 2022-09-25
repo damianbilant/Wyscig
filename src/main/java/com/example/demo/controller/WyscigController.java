@@ -65,7 +65,7 @@ public class WyscigController {
 
 
     private void metodaMichala() {
-        //moje 09:34
+        //moje zmiany 20:00 nie kasuj :)
     }
 
 }
