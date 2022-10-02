@@ -65,9 +65,10 @@ public class WyscigController {
 
 
     private void metodaMichala() {
-        //moje zmiany 20:00 nie kasuj :)
+
         //moje    20:45
         //i znowu moje zmiany, zeby zamieszac troche, dorzuc jeszcze kolejna linie komentarza, a pierwsza skasuj :)
+        //nowa linia
     }
 }
 
