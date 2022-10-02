@@ -71,6 +71,7 @@ public class WyscigController {
         //i po raz kolejny mieszam :D
         //ok
         //jestes pewny ze ok??
+        //zmiana na masterze podczas rozwiazywania Twojego zadania
     }
 }
 
