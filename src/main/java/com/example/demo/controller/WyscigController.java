@@ -70,6 +70,7 @@ public class WyscigController {
         //nowa linia
         //i po raz kolejny mieszam :D
         //ok
+        //jestes pewny ze ok??
     }
 }
 
