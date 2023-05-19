@@ -63,15 +63,6 @@ public class WyscigController {
     return wyscigSerwis.tworzenieWyscigu(uczestnikSerwis.listaUczestnikow);
     }
 
-
-    private void metodaMichala() {
-        //moje    20:45
-        //i znowu moje zmiany, zeby zamieszac troche, dorzuc jeszcze kolejna linie komentarza, a pierwsza skasuj :)
-        //nowa linia
-        //i po raz kolejny mieszam :D
-        //ok
-        //jestes pewny ze ok??
-    }
 }
 
 
