@@ -118,4 +118,3 @@ public class Controller {
 }
 
 
-//TODO: poptrzeć o json, o statusach w postman
